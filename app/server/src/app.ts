@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import socialRoutes from "./routes/social.routes";
+import restaurantRoutes from "./routes/restaurant.routes";
 
 dotenv.config();
 
@@ -16,4 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/auth/social", socialRoutes);
+
+app.use("/api/restaurants", restaurantRoutes);
+
 export default app;
