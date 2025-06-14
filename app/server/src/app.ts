@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+import socialRoutes from "./routes/social.routes";
 
 dotenv.config();
 
@@ -14,4 +15,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/auth/social", socialRoutes);
 export default app;

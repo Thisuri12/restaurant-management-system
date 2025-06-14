@@ -18,9 +18,12 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.37.7",
     "tsconfig-paths": "^4.2.0",
-    "zod": "^3.25.61"
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -29,6 +32,9 @@
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^24.0.0",
+    "@types/passport": "^1.0.17",
+    "@types/passport-facebook": "^3.0.3",
+    "@types/passport-google-oauth20": "^2.0.16",
     "dotenv": "^16.5.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",

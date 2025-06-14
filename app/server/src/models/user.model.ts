@@ -7,7 +7,7 @@ export interface userAttributes {
   email: string;
   password_hash: string;
   role: "customer" | "admin";
-  provider: "local" | "google" | "facebook" | "github";
+  provider: "local" | "google" | "facebook";
   social_id?: string | null;
   is_verified: boolean;
   refresh_token?: string | null;
@@ -34,7 +34,7 @@ export class User
   public email!: string;
   public password_hash!: string;
   public role!: "customer" | "admin";
-  public provider!: "local" | "google" | "facebook" | "github";
+  public provider!: "local" | "google" | "facebook";
   public social_id?: string | null;
   public is_verified!: boolean;
   public refresh_token?: string | null;
@@ -65,7 +65,7 @@ User.init(
       defaultValue: "customer",
     },
     provider: {
-      type: DataTypes.ENUM("local", "google", "facebook", "github"),
+      type: DataTypes.ENUM("local", "google", "facebook"),
       allowNull: false,
       defaultValue: "local",
     },

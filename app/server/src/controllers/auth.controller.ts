@@ -2,10 +2,17 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "@models/user.model";
 import { generateAccessToken, generateRefreshToken } from "src/utils/jwt";
+import { loginSchema, registerSchema } from "src/utils/validator";
 
 // Register func
 export const register = async (req: Request, res: Response): Promise<void> => {
-  const { full_name, email, password } = req.body;
+  const parsed = registerSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ errors: parsed.error.flatten() });
+    return;
+  }
+
+  const { full_name, email, password } = parsed.data;
 
   try {
     const existingUser = await User.findOne({ where: { email } });
@@ -36,7 +43,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 //Login func
 export const login = async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body;
+  const parsed = loginSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ errors: parsed.error.flatten() });
+    return;
+  }
+
+  const { email, password } = parsed.data;
 
   try {
     const loginUser = await User.findOne({
