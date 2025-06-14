@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "@models/user.model";
 import { generateAccessToken, generateRefreshToken } from "src/utils/jwt";
-import { loginSchema, registerSchema } from "src/utils/validator";
+import { loginSchema, registerSchema } from "src/validators/auth.validator";
 
 // Register func
 export const register = async (req: Request, res: Response): Promise<void> => {
