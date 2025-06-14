@@ -1,3 +1,4 @@
+import { UniqueConstraintError } from "sequelize";
 import sequelize from "../../../config/database";
 import { User } from "../../user.model";
 
@@ -29,11 +30,11 @@ describe("User model", () => {
     await expect(
       User.create({
         full_name: "Another User",
-        email: "test@example.com",
+        email: "test@example.com", // duplicate
         password_hash: "abc123",
         role: "customer",
         provider: "local",
       })
-    ).rejects.toThrow();
+    ).rejects.toThrow(UniqueConstraintError);
   });
 });
