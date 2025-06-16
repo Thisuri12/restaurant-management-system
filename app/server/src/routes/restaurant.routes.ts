@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.post("/", createRestaurant);
 router.get("/", getRestaurant);
+router.get("/:id", getRestaurant);
 router.put("/:id", updateRestaurant);
 router.delete("/:id", deleteRestaurant);
 
