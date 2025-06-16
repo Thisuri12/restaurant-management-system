@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import socialRoutes from "./routes/social.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
+import categoryRoutes from "./routes/category.routes";
 
 dotenv.config();
 
@@ -19,5 +20,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth/social", socialRoutes);
 
 app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/categories", categoryRoutes);
 
 export default app;
