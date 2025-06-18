@@ -1,26 +1,24 @@
-import { DataTypes, Model } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import sequelize from "../config/database";
 
-export interface dishAttributes {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  image_url: string;
-  category_id: number;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
-export class Dish extends Model<dishAttributes> implements dishAttributes {
-  public id!: number;
-  public name!: string;
-  public price!: number;
-  public description!: string;
-  public image_url!: string;
-  public category_id!: number;
-  public readonly created_at?: Date;
-  public readonly updated_at?: Date;
+export class Dish extends Model<
+  InferAttributes<Dish>,
+  InferCreationAttributes<Dish>
+> {
+  declare id: CreationOptional<number>;
+  declare name: string;
+  declare price: number;
+  declare description?: string;
+  declare image_url?: string;
+  declare category_id: number;
+  declare created_at?: Date;
+  declare updated_at?: Date;
 }
 
 Dish.init(
@@ -32,8 +30,8 @@ Dish.init(
     },
     name: { type: DataTypes.STRING, allowNull: false },
     price: { type: DataTypes.FLOAT, allowNull: false },
-    description: { type: DataTypes.TEXT, allowNull: false },
-    image_url: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: true },
+    image_url: { type: DataTypes.STRING, allowNull: true },
     category_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
     created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
