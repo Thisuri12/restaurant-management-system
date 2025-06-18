@@ -15,13 +15,8 @@ export interface restaurantAttributes {
   updated_at?: Date;
 }
 
-export type restaurantCreationAttributes = Optional<
-  restaurantAttributes,
-  "id" | "created_at" | "updated_at"
->;
-
 export class Restaurant
-  extends Model<restaurantAttributes, restaurantCreationAttributes>
+  extends Model<restaurantAttributes>
   implements restaurantAttributes
 {
   public id!: number;

@@ -9,9 +9,9 @@ export const createCategorySchema = z.object({
 export const getCategorySchema = z.object({
   name: z.string().min(2).optional(),
   restaurant_id: z.number().int().positive().optional(),
-  page: z.preprocess(
-    (val) => Number(val ?? 1),
-    z.number().int().positive().optional().default(1)
+  skip: z.preprocess(
+    (val) => Number(val ?? 0),
+    z.number().int().nonnegative().optional().default(0)
   ),
   limit: z.preprocess(
     (val) => Number(val ?? 10),

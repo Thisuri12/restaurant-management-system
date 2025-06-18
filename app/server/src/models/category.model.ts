@@ -9,13 +9,8 @@ export interface categoryAttributes {
   updated_at?: Date;
 }
 
-export type categoryCreationAttributes = Optional<
-  categoryAttributes,
-  "id" | "created_at" | "updated_at"
->;
-
 export class Category
-  extends Model<categoryAttributes, categoryCreationAttributes>
+  extends Model<categoryAttributes>
   implements categoryAttributes
 {
   public id!: number;

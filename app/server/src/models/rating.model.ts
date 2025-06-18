@@ -11,13 +11,8 @@ export interface ratingAttributes {
   updated_at?: Date;
 }
 
-export type ratingCreationAttributes = Optional<
-  ratingAttributes,
-  "id" | "user_id" | "comment" | "created_at" | "updated_at"
->;
-
 export class Rating
-  extends Model<ratingAttributes, ratingCreationAttributes>
+  extends Model<ratingAttributes>
   implements ratingAttributes
 {
   public id!: number;

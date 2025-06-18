@@ -1,23 +1,39 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
+import { StatusCodes } from "http-status-codes";
 import { User } from "@models/user.model";
-import { generateAccessToken, generateRefreshToken } from "src/utils/jwt";
-import { loginSchema, registerSchema } from "src/validators/auth.validator";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyToken,
+} from "../utils/jwt";
+import { loginSchema, registerSchema } from "../validators/auth.validator";
+import { AuthResponse } from "../types/auth.types";
 
-// Register func
-export const register = async (req: Request, res: Response): Promise<void> => {
-  const parsed = registerSchema.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ errors: parsed.error.flatten() });
-    return;
-  }
+// Register function
+const tokenBlacklist = new Set<string>();
 
-  const { full_name, email, password } = parsed.data;
-
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
+    const parsed = registerSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ errors: parsed.error.flatten() });
+      return;
+    }
+
+    const { full_name, email, password } = parsed.data;
+
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      res.status(400).json({ message: "User already exists." });
+      res
+        .status(StatusCodes.CONFLICT)
+        .json({ message: "User already exists." });
       return;
     }
 
@@ -32,56 +48,140 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       is_verified: false,
     });
 
-    res.status(201).json({
-      message: "User Registered.",
-      user: { id: newUser.id, email: newUser.email },
+    const response: Omit<AuthResponse, "accessToken" | "refreshToken"> = {
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        full_name: newUser.full_name,
+        role: newUser.role,
+      },
+    };
+
+    res.status(StatusCodes.CREATED).json({
+      message: "User registered successfully",
+      ...response,
     });
   } catch (err) {
-    res.status(500).json({ message: "Registration Failed.", error: err });
+    next(err);
   }
 };
 
-//Login func
-export const login = async (req: Request, res: Response): Promise<void> => {
-  const parsed = loginSchema.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ errors: parsed.error.flatten() });
-    return;
-  }
-
-  const { email, password } = parsed.data;
-
+// Login function
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const loginUser = await User.findOne({
+    const parsed = loginSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ errors: parsed.error.flatten() });
+      return;
+    }
+
+    const { email, password } = parsed.data;
+
+    const user = await User.findOne({
       where: { email, provider: "local" },
     });
-    if (!loginUser) {
-      res.status(404).json({ message: "User not found." });
+
+    if (!user) {
+      res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Invalid credentials." });
       return;
     }
 
-    const valid = await bcrypt.compare(password, loginUser.password_hash);
+    const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) {
-      res.status(400).json({ message: "Invalid credentials." });
+      res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Invalid credentials." });
       return;
     }
 
-    const accessToken = generateAccessToken(loginUser.id, loginUser.role);
-    const refreshToken = generateRefreshToken(loginUser.id);
+    const accessToken = generateAccessToken(user.id, user.role);
+    const refreshToken = generateRefreshToken(user.id);
 
-    await loginUser.update({ refresh_token: refreshToken });
-
-    res.json({
+    const response: AuthResponse = {
       accessToken,
       refreshToken,
-      loginUser: {
-        id: loginUser.id,
-        full_name: loginUser.full_name,
-        email: loginUser.email,
-        role: loginUser.role,
+      user: {
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role,
       },
-    });
+    };
+
+    res.status(StatusCodes.OK).json(response);
   } catch (err) {
-    res.status(500).json({ message: "Login Failed.", error: err });
+    next(err);
+  }
+};
+
+export const refreshToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({
+          message: "Authorization header with Bearer token is required",
+        });
+      return;
+    }
+
+    const refreshToken = authHeader.split(" ")[1];
+
+    if (tokenBlacklist.has(refreshToken)) {
+      res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Invalid refresh token" });
+      return;
+    }
+
+    if (tokenBlacklist.has(refreshToken)) {
+      res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Invalid refresh token" });
+      return;
+    }
+
+    const decoded = verifyToken(refreshToken);
+    const user = await User.findByPk(decoded.userId);
+
+    if (!user) {
+      res.status(StatusCodes.UNAUTHORIZED).json({ message: "User not found" });
+      return;
+    }
+
+    const newAccessToken = generateAccessToken(user.id, user.role);
+    const newRefreshToken = generateRefreshToken(user.id);
+
+    // Add old refresh token to blacklist
+    tokenBlacklist.add(refreshToken);
+
+    const response: AuthResponse = {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+      user: {
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role,
+      },
+    };
+
+    res.status(StatusCodes.OK).json(response);
+  } catch (err) {
+    next(err);
   }
 };

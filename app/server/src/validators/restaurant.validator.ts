@@ -17,9 +17,9 @@ export const createRestaurantSchema = z.object({
 
 export const getRestaurantsSchema = z.object({
   name: z.string().min(2).optional(),
-  page: z.preprocess(
-    (val) => Number(val ?? 1),
-    z.number().int().positive().optional().default(1)
+  skip: z.preprocess(
+    (val) => Number(val ?? 0),
+    z.number().int().nonnegative().optional().default(0)
   ),
   limit: z.preprocess(
     (val) => Number(val ?? 10),
@@ -46,7 +46,7 @@ export const updateRestaurantSchema = z.object({
     .optional(),
   delivery_fee: z
     .number()
-    .nonnegative("Minimum price must be 0 or more")
+    .nonnegative("Delivery fee must be 0 or more")
     .optional(),
 });
 

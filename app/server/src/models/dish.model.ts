@@ -12,15 +12,7 @@ export interface dishAttributes {
   updated_at?: Date;
 }
 
-export type dishCreationAttributes = Optional<
-  dishAttributes,
-  "id" | "created_at" | "updated_at"
->;
-
-export class Dish
-  extends Model<dishAttributes, dishCreationAttributes>
-  implements dishAttributes
-{
+export class Dish extends Model<dishAttributes> implements dishAttributes {
   public id!: number;
   public name!: string;
   public price!: number;

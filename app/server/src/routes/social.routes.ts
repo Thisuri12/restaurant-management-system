@@ -1,10 +1,10 @@
-import express from "express";
+import { Router } from "express";
 import passport from "passport";
 import "../middleware/passport-google";
 import "../middleware/passport-facebook";
 import { generateAccessToken, generateRefreshToken } from "src/utils/jwt";
 
-const router = express.Router();
+const router = Router();
 
 //Google Route
 router.get(

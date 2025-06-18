@@ -1,99 +1,123 @@
-import { Request, Response } from "express";
-import { Category } from "@models/category.model";
+import { Request, Response, NextFunction } from "express";
+import { StatusCodes } from "http-status-codes";
+import { categoryService } from "../services/category.service";
 import {
   createCategorySchema,
   getCategorySchema,
   updateCategorySchema,
   deleteCategorySchema,
-} from "src/validators/category.validator";
-import { Op } from "sequelize";
+} from "../validators/category.validator";
 
 //Create New Category function
-export const createCategory = async (req: Request, res: Response) => {
-  const parsed = createCategorySchema.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ errors: parsed.error.flatten() });
-    return;
-  }
-
-  const { name, restaurant_id } = parsed.data;
-
+export const createCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const category = await Category.create({
-      name,
-      restaurant_id,
-    });
+    const parsed = createCategorySchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        errors: parsed.error.flatten(),
+      });
+      return;
+    }
 
-    res.status(201).json(category);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to create category", error: err });
-  }
-};
-
-//Get a category by searching a name or get all the categories
-export const getCategory = async (req: Request, res: Response) => {
-  try {
-    const { name, page = 1, limit = 10 } = getCategorySchema.parse(req.query);
-    const offset = (page - 1) * limit;
-    const whereClause = name ? { name: { [Op.like]: `%${name}%` } } : {};
-    const category = await Category.findAll({
-      where: whereClause,
-      limit,
-      offset,
-    });
-
-    res.status(200).json({
-      page,
-      limit,
-      results: category.length,
+    const category = await categoryService.create(parsed.data);
+    res.status(StatusCodes.CREATED).json({
+      message: "Category created successfully",
       data: category,
     });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch categories", error: err });
+  } catch (error) {
+    next(error);
   }
 };
 
-//Update a restaurant by Id
-export const updateCategory = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const parsedBody = updateCategorySchema.safeParse(req.body);
-
-  if (!parsedBody.success) {
-    res.status(400).json({ errors: parsedBody.error.flatten() });
-    return;
-  }
-
+//Handles category finding requests
+export const getCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const category = await Category.findByPk(Number(id));
-    if (!category) {
-      res.status(404).json({ message: "Category not found" });
+    const parsed = getCategorySchema.safeParse(req.query);
+    if (!parsed.success) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        errors: parsed.error.flatten(),
+      });
       return;
     }
-    await category.update(parsedBody.data);
-    res.status(200).json(category);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to update category", error: err });
+
+    const result = await categoryService.findAll(parsed.data);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
   }
 };
 
-//Delete a restaurant by Id
-export const deleteCategory = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const parsedData = deleteCategorySchema.safeParse({ id });
-  if (!parsedData.success) {
-    res.status(400).json({ errors: parsedData.error.flatten() });
-    return;
-  }
+//Handles category update requests
+export const updateCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const category = await Category.findByPk(Number(id));
-    if (!category) {
-      res.status(404).json({ message: "Category not found" });
+    const { id } = req.params;
+    const parsedBody = updateCategorySchema.safeParse(req.body);
+
+    if (!parsedBody.success) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        errors: parsedBody.error.flatten(),
+      });
       return;
     }
 
-    await category.destroy();
-    res.status(200).json({ message: "Category deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to delete category", error: err });
+    const updated = await categoryService.update(id, parsedBody.data);
+    if (!updated) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        message: "Category not found",
+      });
+      return;
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "Category updated successfully",
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//Handles category deletion requests
+export const deleteCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const parsedData = deleteCategorySchema.safeParse({ id });
+
+    if (!parsedData.success) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        errors: parsedData.error.flatten(),
+      });
+      return;
+    }
+
+    const success = await categoryService.delete(parsedData.data.id);
+    if (!success) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        message: "Category not found",
+      });
+      return;
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "Category deleted successfully",
+    });
+  } catch (error) {
+    next(error);
   }
 };
