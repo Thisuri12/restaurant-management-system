@@ -44,16 +44,16 @@ export const dishService = {
 
   //Updates an existing dish
   async update(id: string | number, data: UpdateDishData) {
-    const category = await Dish.findByPk(id);
-    if (!category) return null;
-    return await category.update(data);
+    const dish = await Dish.findByPk(id);
+    if (!dish) return null;
+    return await dish.update(data);
   },
 
   //Deletes a dish record
   async delete(id: string | number) {
-    const category = await Dish.findByPk(id);
-    if (!category) return false;
-    await category.destroy();
+    const dish = await Dish.findByPk(id);
+    if (!dish) return false;
+    await dish.destroy();
     return true;
   },
 };
