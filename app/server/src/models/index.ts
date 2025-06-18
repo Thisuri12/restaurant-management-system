@@ -34,4 +34,4 @@ OrderItem.belongsTo(Order, { foreignKey: "order_id" });
 OrderItem.belongsTo(Dish, { foreignKey: "dish_id" });
 Dish.hasMany(OrderItem, { foreignKey: "dish_id" });
 
-export { Restaurant, Category, Dish, Rating, Order, OrderItem };
+export { Restaurant, Category, Dish, Rating, Order, OrderItem, User };
