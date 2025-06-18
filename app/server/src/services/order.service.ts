@@ -14,7 +14,7 @@ type UpdateOrderData = z.infer<typeof updateOrderSchema>;
 type GetOrderParams = z.infer<typeof getOrderSchema>;
 
 export const orderService = {
-  // CREATE Order + OrderItems
+  // Create order
   async create(data: CreateOrderData) {
     const { user_id, items } = data;
 
@@ -92,7 +92,7 @@ export const orderService = {
     };
   },
 
-  // UPDATE order (e.g. status)
+  // Update order
   async update(id: string | number, data: UpdateOrderData) {
     const order = await Order.findByPk(id);
     if (!order) return null;
@@ -100,7 +100,7 @@ export const orderService = {
     return await order.update(data);
   },
 
-  // DELETE order and its items
+  // Delete order and its items
   async delete(id: string | number) {
     const transaction = await sequelize.transaction();
     try {
