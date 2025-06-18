@@ -1,19 +1,21 @@
 import sequelize from "../config/database";
-import { Rating, Dish } from "../models";
+import { User, Rating, Dish } from "../models";
 import { generateFakeRating } from "../utils/fakers/rating.faker";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 
 const seedRating = async () => {
   try {
     await sequelize.sync();
 
     const dishes = await Dish.findAll();
+    const users = await User.findAll();
+    const userIds = users.map((u) => u.id);
 
     for (const dish of dishes) {
       const ratingsCount = faker.number.int({ min: 1, max: 5 });
 
       for (let i = 0; i < ratingsCount; i++) {
-        await Rating.create(generateFakeRating(dish.id));
+        await Rating.create(generateFakeRating(dish.id, userIds));
       }
     }
 
