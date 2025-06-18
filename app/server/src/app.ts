@@ -6,6 +6,7 @@ import socialRoutes from "./routes/social.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
 import categoryRoutes from "./routes/category.routes";
 import dishRoutes from "./routes/dishes.routes";
+import ratingRoutes from "./routes/rating.routes";
 
 dotenv.config();
 
@@ -22,5 +23,6 @@ app.use("/api/auth/social", socialRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/dishes", dishRoutes);
+app.use("/api/rating", ratingRoutes);
 
 export default app;
