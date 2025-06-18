@@ -13,6 +13,11 @@ type UpdateRestaurantData = z.infer<typeof updateRestaurantSchema>;
 type GetRestaurantsParams = z.infer<typeof getRestaurantsSchema>;
 
 export const restaurantService = {
+  //Creates a new restaurant
+  async create(data: CreateRestaurantData) {
+    return await Restaurant.create(data);
+  },
+
   //Finds all restaurants with pagination and optional name filtering
   async findAll(params: GetRestaurantsParams) {
     const { skip, limit, name } = params;
@@ -33,11 +38,6 @@ export const restaurantService = {
         pages: Math.ceil(count / limit),
       },
     };
-  },
-
-  //Creates a new restaurant
-  async create(data: CreateRestaurantData) {
-    return await Restaurant.create(data);
   },
 
   //Updates an existing restaurant

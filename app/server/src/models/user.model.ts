@@ -1,37 +1,26 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import sequelize from "../config/database";
 
-export interface UserAttributes {
-  id: number;
-  full_name: string;
-  email: string;
-  password_hash: string;
-  role: "customer" | "admin";
-  provider: "local" | "google" | "facebook";
-  social_id?: string;
-  is_verified: boolean;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
-export type UserCreationAttributes = Optional<
-  UserAttributes,
-  "id" | "created_at" | "updated_at" | "social_id" | "is_verified"
->;
-export class User
-  extends Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes
-{
-  public id!: number;
-  public full_name!: string;
-  public email!: string;
-  public password_hash!: string;
-  public role!: "customer" | "admin";
-  public provider!: "local" | "google" | "facebook";
-  public social_id?: string;
-  public is_verified!: boolean;
-  public readonly created_at?: Date;
-  public readonly updated_at?: Date;
+export class User extends Model<
+  InferAttributes<User>,
+  InferCreationAttributes<User>
+> {
+  declare id: CreationOptional<number>;
+  declare full_name: string;
+  declare email: string;
+  declare password_hash: string;
+  declare role: "customer" | "admin";
+  declare provider: "local" | "google" | "facebook";
+  declare social_id?: string;
+  declare is_verified: boolean;
+  declare created_at?: Date;
+  declare updated_at?: Date;
 }
 
 User.init(

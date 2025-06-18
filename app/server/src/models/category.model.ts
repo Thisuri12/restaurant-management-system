@@ -1,23 +1,21 @@
-import { DataTypes, Model } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import sequelize from "../config/database";
 
-export interface categoryAttributes {
-  id: number;
-  name: string;
-  restaurant_id: number;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
-export class Category
-  extends Model<categoryAttributes>
-  implements categoryAttributes
-{
-  public id!: number;
-  public name!: string;
-  public restaurant_id!: number;
-  public readonly created_at?: Date;
-  public readonly updated_at?: Date;
+export class Category extends Model<
+  InferAttributes<Category>,
+  InferCreationAttributes<Category>
+> {
+  declare id: CreationOptional<number>;
+  declare name: string;
+  declare restaurant_id: number;
+  declare created_at?: Date;
+  declare updated_at?: Date;
 }
 
 Category.init(
