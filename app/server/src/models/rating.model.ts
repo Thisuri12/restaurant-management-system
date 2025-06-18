@@ -1,27 +1,23 @@
-import { DataTypes, Model } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import sequelize from "../config/database";
 
-export interface ratingAttributes {
-  id: number;
-  dish_id: number;
-  user_id?: number;
-  rating: number;
-  comment?: string;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
-export class Rating
-  extends Model<ratingAttributes>
-  implements ratingAttributes
-{
-  public id!: number;
-  public dish_id!: number;
-  public user_id?: number | undefined;
-  public rating!: number;
-  public comment?: string | undefined;
-  public readonly created_at?: Date;
-  public readonly updated_at?: Date;
+export class Rating extends Model<
+  InferAttributes<Rating>,
+  InferCreationAttributes<Rating>
+> {
+  declare id: CreationOptional<number>;
+  declare dish_id: number;
+  declare user_id?: number | undefined;
+  declare rating: number;
+  declare comment?: string | undefined;
+  declare created_at?: Date;
+  declare updated_at?: Date;
 }
 
 Rating.init(
