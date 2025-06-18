@@ -8,6 +8,7 @@ import categoryRoutes from "./routes/category.routes";
 import dishRoutes from "./routes/dishes.routes";
 import ratingRoutes from "./routes/rating.routes";
 import orderRoutes from "./routes/order.routes";
+import reportRoutes from "./routes/report.routes";
 
 dotenv.config();
 
@@ -26,5 +27,6 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/dishes", dishRoutes);
 app.use("/api/rating", ratingRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/reports", reportRoutes);
 
 export default app;
