@@ -131,11 +131,9 @@ export const refreshToken = async (
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({
-          message: "Authorization header with Bearer token is required",
-        });
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Authorization header with Bearer token is required",
+      });
       return;
     }
 
