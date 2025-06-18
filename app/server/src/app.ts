@@ -7,6 +7,7 @@ import restaurantRoutes from "./routes/restaurant.routes";
 import categoryRoutes from "./routes/category.routes";
 import dishRoutes from "./routes/dishes.routes";
 import ratingRoutes from "./routes/rating.routes";
+import orderRoutes from "./routes/order.routes";
 
 dotenv.config();
 
@@ -24,5 +25,6 @@ app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/dishes", dishRoutes);
 app.use("/api/rating", ratingRoutes);
+app.use("/api/order", orderRoutes);
 
 export default app;
