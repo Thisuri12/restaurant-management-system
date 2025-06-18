@@ -1,6 +1,6 @@
-import { Restaurant } from "@models/restaurant.model";
-import { generateFakeRestaurant } from "src/utils/fakers/restaurant.faker";
-import sequelize from "src/config/database";
+import { Restaurant } from "../models/restaurant.model";
+import { generateFakeRestaurant } from "../utils/fakers/restaurant.faker";
+import sequelize from "../config/database";
 
 const seedRestaurants = async () => {
   try {

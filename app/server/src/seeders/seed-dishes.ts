@@ -1,6 +1,5 @@
-import sequelize from "@config/database";
-import { Dish } from "@models/dish.model";
-import { Category } from "@models/category.model";
+import sequelize from "../config/database";
+import { Dish, Category } from "../models";
 import { generateFakeDish } from "src/utils/fakers/dish.faker";
 
 const seedDishes = async () => {

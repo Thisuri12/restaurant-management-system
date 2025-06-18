@@ -1,7 +1,7 @@
-import sequelize from "@config/database";
-import { Category } from "@models/category.model";
-import { Restaurant } from "@models/restaurant.model";
-import { generateFakeCategory } from "src/utils/fakers/category.faker";
+import sequelize from "../config/database";
+import { Category } from "../models/category.model";
+import { Restaurant } from "../models/restaurant.model";
+import { generateFakeCategory } from "../utils/fakers/category.faker";
 
 const seedCategories = async () => {
   try {
