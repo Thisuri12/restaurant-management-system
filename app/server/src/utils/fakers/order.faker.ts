@@ -12,7 +12,7 @@ export const generateFakeOrder = (dishIds: number[], userId: number) => {
     const unit_price = faker.number.float({
       min: 200,
       max: 1000,
-      fractionDigits: 0.01,
+      fractionDigits: 2,
     });
     const price = unit_price * quantity;
 
