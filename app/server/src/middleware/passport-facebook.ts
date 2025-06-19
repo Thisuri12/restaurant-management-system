@@ -12,17 +12,16 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        const email = profile.emails?.[0]?.value?.toLowerCase();
+        if (!email) {
+          return done(new Error("Facebook did not provide an email"));
+        }
+
         const existingUser = await User.findOne({
           where: { social_id: profile.id, provider: "facebook" },
         });
 
         if (existingUser) return done(null, existingUser);
-
-        const email = profile.emails?.[0]?.value;
-
-        if (!email) {
-          return done(new Error("Facebook did not provide an email"));
-        }
 
         const newUser = await User.create({
           full_name: profile.displayName,
@@ -36,6 +35,7 @@ passport.use(
 
         return done(null, newUser);
       } catch (err) {
+        console.error("Facebook strategy error:", err);
         return done(err, undefined);
       }
     }
