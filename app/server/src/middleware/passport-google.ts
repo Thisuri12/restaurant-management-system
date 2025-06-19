@@ -11,33 +11,43 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Safely check if email exists
-        const email = profile.emails?.[0]?.value;
+        const email = profile.emails?.[0]?.value?.toLowerCase();
         if (!email) {
           return done(new Error("Google account has no email"), undefined);
         }
 
-        // Try to find user by social_id and provider
-        const existingUser = await User.findOne({
+        // Check by social_id + provider
+        let user = await User.findOne({
           where: { social_id: profile.id, provider: "google" },
         });
 
-        if (existingUser) return done(null, existingUser);
+        // If not found, check by email
+        if (!user) {
+          user = await User.findOne({ where: { email } });
 
-        // Create a new user with all required fields
-        const newUser = await User.create({
-          full_name: profile.displayName,
-          email: email,
-          password_hash: "",
-          provider: "google",
-          social_id: profile.id,
-          role: "customer",
-          is_verified: true,
-        });
+          // If found, update to link with Google
+          if (user) {
+            await user.update({
+              provider: "google",
+              social_id: profile.id,
+              is_verified: true,
+            });
+          } else {
+            // If completely new, create user
+            user = await User.create({
+              full_name: profile.displayName,
+              email,
+              password_hash: "",
+              provider: "google",
+              social_id: profile.id,
+              role: "customer",
+              is_verified: true,
+            });
+          }
+        }
 
-        return done(null, newUser);
+        return done(null, user);
       } catch (err) {
-        // Log for debugging
         console.error("Google strategy error:", err);
         return done(err, undefined);
       }
