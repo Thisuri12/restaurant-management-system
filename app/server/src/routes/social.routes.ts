@@ -21,7 +21,10 @@ router.get(
     const refreshToken = generateRefreshToken(user.id);
     user.update({ refresh_token: refreshToken });
 
-    res.json({ accessToken, refreshToken, user });
+    const redirectUrl = `http://localhost:3000/social-callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${encodeURIComponent(
+      JSON.stringify(user)
+    )}`;
+    res.redirect(redirectUrl);
   }
 );
 
@@ -40,7 +43,10 @@ router.get(
     const refreshToken = generateRefreshToken(user.id);
     user.update({ refresh_token: refreshToken });
 
-    res.json({ accessToken, refreshToken, user });
+    const redirectUrl = `http://localhost:3000/social-callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${encodeURIComponent(
+      JSON.stringify(user)
+    )}`;
+    res.redirect(redirectUrl);
   }
 );
 

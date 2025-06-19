@@ -20,13 +20,13 @@ app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/auth/social", socialRoutes);
-app.use("/api/restaurants", restaurantRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/dishes", dishRoutes);
-app.use("/api/rating", ratingRoutes);
-app.use("/api/order", orderRoutes);
-app.use("/api/reports", reportRoutes);
+app.use("/auth", authRoutes);
+app.use("/auth", socialRoutes);
+app.use("/restaurants", restaurantRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/dishes", dishRoutes);
+app.use("/rating", ratingRoutes);
+app.use("/order", orderRoutes);
+app.use("/reports", reportRoutes);
 
 export default app;
