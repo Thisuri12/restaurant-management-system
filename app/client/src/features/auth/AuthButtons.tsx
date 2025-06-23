@@ -15,7 +15,7 @@ export default function AuthButton() {
       <Button
         variant="emailLogin"
         size="lg"
-        className="w-full flex items-center justify-center gap-2"
+        className="w-full flex items-center justify-center gap-2 custom-shadow-transition hover:shadow-lg"
         onClick={handleEmailLogin}
       >
         <svg
