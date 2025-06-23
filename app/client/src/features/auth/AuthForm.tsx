@@ -50,6 +50,7 @@ export default function AuthForm({ type }: Props) {
           response: {
             data: {
               message?: string;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               errors?: any;
               error?: string;
             };

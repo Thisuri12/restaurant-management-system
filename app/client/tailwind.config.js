@@ -43,9 +43,16 @@ module.exports = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
       },
+      colors: {
+        customGray: "#2e3333",
+        customGreen: "#00ccbc",
+        customBlue: "#4c69ba",
+        customGray1: "#414747",
+      },
       fontFamily: {
         sora: ["var(--font-sora)", "sans-serif"],
         sans: [
+          "Inter",
           "plex-sans",
           '"Helvetica Neue"',
           "Helvetica",
@@ -64,5 +71,15 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        ".custom-shadow-transition": {
+          transitionProperty: "box-shadow, -webkit-box-shadow",
+          transitionDuration: "0.15s",
+          transitionTimingFunction: "ease-out",
+        },
+      });
+    },
+  ],
 };

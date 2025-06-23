@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import { Sora } from "next/font/google";
+import Footer from "@/components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 
 const sora = Sora({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // You can customize these
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sora",
 });
 
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
     default: "Deliveroo - Food Delivery",
   },
   description: "Order food online from your favorite restaurants",
+  icons: {
+    icon: ".favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -40,6 +44,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

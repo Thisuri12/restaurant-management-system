@@ -20,10 +20,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
 
-        loginFacebook: "bg-blue-700 text-white hover:bg-blue-800 font-bold",
-        loginGoogle:
-          "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-bold",
-        emailLogin: "bg-teal-500 text-white hover:bg-teal-400 font-bold",
+        loginFacebook: "bg-customBlue text-white font-bold",
+        loginGoogle: "bg-white text-gray-700 border border-gray-300 font-bold",
+        emailLogin: "bg-customGreen text-white font-bold",
       },
       size: {
         default: "h-9 px-4 py-2",
