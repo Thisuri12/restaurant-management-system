@@ -15,7 +15,7 @@ export default function Header() {
           <nav className="flex items-center gap-4">
             <Link
               href="/login"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium font-sora"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ export default function Header() {
             </Link>
             <Link
               href="/account"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium font-sora"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
