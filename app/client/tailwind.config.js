@@ -44,8 +44,9 @@ module.exports = {
         ring: "hsl(var(--ring))",
       },
       fontFamily: {
-        sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
-        plex: [
+        sora: ["var(--font-sora)", "sans-serif"],
+        sans: [
+          "plex-sans",
           '"Helvetica Neue"',
           "Helvetica",
           "Arial",

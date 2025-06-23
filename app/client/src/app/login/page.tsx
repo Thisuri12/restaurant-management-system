@@ -10,8 +10,10 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="max-w-sm mx-auto mt-20 p-4 space-y-6 font-plex">
-      <h2 className="text-2xl font-bold text-left">Sign up or log in</h2>
+    <div className="max-w-md mx-auto mt-20 p-4 space-y-6 font-plex">
+      <h2 className="text-2xl font-bold text-left font-sora">
+        Sign up or log in
+      </h2>
       <SocialButtons />
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">

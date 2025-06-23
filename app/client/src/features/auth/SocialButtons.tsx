@@ -15,7 +15,7 @@ export default function SocialButtons() {
         onClick={() => handleSocial("facebook")}
         variant="loginFacebook"
         size="lg"
-        className="w-full flex items-center justify-center gap-2 py-12"
+        className="w-full flex items-center justify-center gap-2 py-12 "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

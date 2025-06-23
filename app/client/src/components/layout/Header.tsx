@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 font-plex">
+    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
@@ -15,7 +15,7 @@ export default function Header() {
           <nav className="flex items-center gap-4">
             <Link
               href="/login"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium font-sora"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ export default function Header() {
             </Link>
             <Link
               href="/account"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-medium font-sora"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
