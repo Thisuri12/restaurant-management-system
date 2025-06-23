@@ -44,8 +44,17 @@ module.exports = {
         ring: "hsl(var(--ring))",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "monospace"],
+        sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
+        plex: [
+          '"Helvetica Neue"',
+          "Helvetica",
+          "Arial",
+          '"Microsoft YaHei"',
+          "微软雅黑体",
+          '"Hiragino Sans GB"',
+          "冬青黑体",
+          "sans-serif",
+        ],
       },
       borderRadius: {
         lg: "var(--radius)",
