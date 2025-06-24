@@ -14,6 +14,7 @@ export class Restaurant extends Model<
   declare id: CreationOptional<number>;
   declare name: string;
   declare location: string;
+  declare image_url?: string;
   declare lat: number;
   declare lng: number;
   declare open_time: string;
@@ -33,6 +34,7 @@ Restaurant.init(
     },
     name: { type: DataTypes.STRING, allowNull: false },
     location: { type: DataTypes.STRING, allowNull: false },
+    image_url: { type: DataTypes.STRING, allowNull: true },
     lat: { type: DataTypes.FLOAT, allowNull: false },
     lng: { type: DataTypes.FLOAT, allowNull: false },
     open_time: { type: DataTypes.STRING, allowNull: false },
