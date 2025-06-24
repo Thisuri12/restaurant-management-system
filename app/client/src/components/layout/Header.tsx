@@ -2,12 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isRestaurantPage = pathname.startsWith("/restaurant");
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 mt-2 mb-2 top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <header
+      className={`bg-white shadow-sm border-b border-gray-100 mt-2 mb-2 ${
+        isRestaurantPage ? "sticky top-0 z-50" : ""
+      }`}
+    >
+      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="logo" width={130} height={30} />
           </Link>

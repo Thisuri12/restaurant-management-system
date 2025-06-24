@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description: "Order food online from your favorite restaurants",
   icons: {
-    icon: ".favicon.ico",
+    icon: "/favicon.ico",
   },
 };
 
