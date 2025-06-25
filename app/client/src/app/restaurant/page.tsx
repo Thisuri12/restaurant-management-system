@@ -50,18 +50,14 @@ export default function RestaurantMenuPage() {
         />
       </div>
 
-      {/* Main Content - 2-column grid */}
-      <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-[2fr_2fr] gap-8">
-        {/* Left side - Menu Sections */}
+      <div className="max-w-8xl mx-auto px-12 py-6 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
+        {/* Left side - Scrollable menu */}
         <div className="space-y-8">
           {menuData.categories.map((category) => (
             <MenuSection
               key={category.id}
               ref={setCategoryRef(category.id)}
-              category={{
-                id: category.id,
-                name: category.name,
-              }}
+              category={{ id: category.id, name: category.name }}
               items={category.items}
               onItemClick={handleItemClick}
             />
@@ -69,9 +65,9 @@ export default function RestaurantMenuPage() {
         </div>
 
         {/* Right side - Cart Summary */}
-        <div className="sticky top-[100px]">
+        <div className="self-start sticky top-[150px]">
           {" "}
-          {/* Keeps cart visible when scrolling */}
+          {/* or top-[100px] as you had */}
           <CartSummary />
         </div>
       </div>

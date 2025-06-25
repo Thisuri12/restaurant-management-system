@@ -36,11 +36,11 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
 
       {/* Modal */}
       <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div className="relative transform overflow-hidden rounded-sm bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+            className="border absolute right-4 top-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-customGreen focus:border-customGreen active:shadow-md transition"
           >
             <X className="h-5 w-5" />
           </button>
@@ -63,11 +63,6 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
                 <h2 className="text-xl font-bold text-gray-900 mb-2">
                   {item.name}
                 </h2>
-                {(item.popular || item.deal) && (
-                  <span className="inline-block px-3 py-1 text-sm font-medium bg-orange-100 text-orange-800 rounded-full mb-2">
-                    {item.popular ? "Popular Choice" : "Special Deal"}
-                  </span>
-                )}
               </div>
               <div className="text-right">
                 <span className="text-2xl font-bold text-gray-900">
@@ -79,36 +74,31 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
             <p className="text-gray-600 mb-6">{item.description}</p>
 
             {/* Quantity selector */}
-            <div className="flex items-center justify-between mb-6">
-              <span className="text-lg font-medium text-gray-900">
-                Quantity
+            <div className="flex items-center justify-center mb-6 gap-6">
+              <button
+                onClick={decrementQuantity}
+                disabled={quantity <= 1}
+                className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="text-lg font-medium min-w-[3rem] text-center">
+                {quantity}
               </span>
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={decrementQuantity}
-                  disabled={quantity <= 1}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Minus className="h-4 w-4" />
-                </button>
-                <span className="text-lg font-medium min-w-[3rem] text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={incrementQuantity}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50"
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
-              </div>
+              <button
+                onClick={incrementQuantity}
+                className="p-2 rounded-full border border-gray-300 hover:bg-gray-50"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
             </div>
 
             {/* Add to cart button */}
             <button
               onClick={handleAddToCart}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+              className="w-full bg-customGreen hover:bg-customGreenDark text-white py-3 px-6 rounded-sm font-medium transition-colors"
             >
-              Add {quantity} to Cart • £{(item.price * quantity).toFixed(2)}
+              Add for • £{(item.price * quantity).toFixed(2)}
             </button>
           </div>
         </div>

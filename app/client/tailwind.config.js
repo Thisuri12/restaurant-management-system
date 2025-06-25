@@ -45,7 +45,8 @@ module.exports = {
       },
       colors: {
         customGray: "#2e3333",
-        customGreen: "#00ccbc",
+        customGreen: "#00b3a8",
+        customGreenDark: "#009e94",
         customBlue: "#4c69ba",
         customGray1: "#414747",
       },
