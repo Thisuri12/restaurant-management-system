@@ -20,23 +20,22 @@ interface MenuStore {
   setActiveCategory: (category: string) => void;
 }
 
-export const useMenuStore = create<MenuStore>((set, get) => ({
+const calculateTotals = (cart: CartItem[]) => {
+  const cartTotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  return { cartTotal, cartCount };
+};
+
+export const useMenuStore = create<MenuStore>((set) => ({
   // Initial state
   cart: [],
   selectedItem: null,
   activeCategory: "popular",
-
-  // Computed values
-  get cartTotal() {
-    return get().cart.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-  },
-
-  get cartCount() {
-    return get().cart.reduce((sum, item) => sum + item.quantity, 0);
-  },
+  cartTotal: 0,
+  cartCount: 0,
 
   // Actions
   addToCart: (item: MenuItem, quantity = 1) => {
@@ -45,38 +44,63 @@ export const useMenuStore = create<MenuStore>((set, get) => ({
         (cartItem) => cartItem.id === item.id
       );
 
+      let newCart: CartItem[];
+
       if (existingItem) {
-        return {
-          cart: state.cart.map((cartItem) =>
-            cartItem.id === item.id
-              ? { ...cartItem, quantity: cartItem.quantity + quantity }
-              : cartItem
-          ),
-        };
+        newCart = state.cart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + quantity }
+            : cartItem
+        );
+      } else {
+        newCart = [...state.cart, { ...item, quantity }];
       }
 
+      const { cartTotal, cartCount } = calculateTotals(newCart);
+
       return {
-        cart: [...state.cart, { ...item, quantity }],
+        cart: newCart,
+        cartTotal,
+        cartCount,
       };
     });
   },
 
   updateQuantity: (id: number, quantity: number) => {
-    set((state) => ({
-      cart: state.cart
+    set((state) => {
+      const newCart = state.cart
         .map((item) => (item.id === id ? { ...item, quantity } : item))
-        .filter((item) => item.quantity > 0),
-    }));
+        .filter((item) => item.quantity > 0);
+
+      const { cartTotal, cartCount } = calculateTotals(newCart);
+
+      return {
+        cart: newCart,
+        cartTotal,
+        cartCount,
+      };
+    });
   },
 
   removeFromCart: (id: number) => {
-    set((state) => ({
-      cart: state.cart.filter((item) => item.id !== id),
-    }));
+    set((state) => {
+      const newCart = state.cart.filter((item) => item.id !== id);
+      const { cartTotal, cartCount } = calculateTotals(newCart);
+
+      return {
+        cart: newCart,
+        cartTotal,
+        cartCount,
+      };
+    });
   },
 
   clearCart: () => {
-    set({ cart: [] });
+    set({
+      cart: [],
+      cartTotal: 0,
+      cartCount: 0,
+    });
   },
 
   setSelectedItem: (item: MenuItem | null) => {

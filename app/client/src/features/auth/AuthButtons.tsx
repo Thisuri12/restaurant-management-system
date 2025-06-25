@@ -15,7 +15,7 @@ export default function AuthButton() {
       <Button
         variant="emailLogin"
         size="lg"
-        className="w-full flex flex-wrap items-center justify-center gap-2 custom-shadow-transition hover:shadow-lg font-semibold"
+        className="w-full flex flex-wrap items-center justify-center gap-2 bg-customGreen hover:bg-customGreenDark font-semibold"
         onClick={handleEmailLogin}
       >
         <div className="flex-shrink-0">

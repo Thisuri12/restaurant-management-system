@@ -58,6 +58,18 @@
     --chart-5: 340 75% 55%;
   }
 
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    scroll-behavior: smooth;
+  }
   * {
     box-sizing: border-box;
   }
