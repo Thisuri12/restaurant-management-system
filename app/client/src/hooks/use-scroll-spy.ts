@@ -1,59 +1,53 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useScrollSpy(categoryIds: string[]) {
   const [activeCategory, setActiveCategory] = useState(categoryIds[0]);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-  // Function to scroll to a category
-  const scrollToCategory = (categoryId: string) => {
-    setIsScrolling(true);
-    setActiveCategory(categoryId);
+  // Used to assign refs to each section
+  const setCategoryRef = useCallback(
+    (id: string) => (el: HTMLElement | null) => {
+      sectionRefs.current[id] = el;
+    },
+    []
+  );
 
-    const element = categoryRefs.current[categoryId];
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+  // Scroll to category
+  const scrollToCategory = useCallback((id: string) => {
+    const el = sectionRefs.current[id];
+    if (el) {
+      const offset = 120; // adjust for sticky nav height
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
+  }, []);
 
-    // Reset scrolling flag after animation
-    setTimeout(() => setIsScrolling(false), 1000);
-  };
-
-  // Set ref for a category
-  const setCategoryRef =
-    (categoryId: string) => (el: HTMLDivElement | null) => {
-      categoryRefs.current[categoryId] = el;
-    };
-
-  // Handle scroll-based category detection
   useEffect(() => {
-    const handleScroll = () => {
-      if (isScrolling) return;
+    if (!categoryIds.length) return;
 
-      const categoryElements = Object.entries(categoryRefs.current)
-        .filter(([, element]) => element !== null)
-        .map(([id, element]) => ({ id, element: element! }));
-
-      const scrollPosition = window.scrollY + 200;
-
-      // Find the category that's currently in view
-      for (let i = categoryElements.length - 1; i >= 0; i--) {
-        const { id, element } = categoryElements[i];
-        if (element.offsetTop <= scrollPosition) {
-          if (id !== activeCategory) {
-            setActiveCategory(id);
-          }
-          break;
-        }
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      // Find the section closest to the top (and visible)
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length > 0) {
+        setActiveCategory(visible[0].target.id.replace("category-", ""));
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [activeCategory, isScrolling]);
+    const observer = new window.IntersectionObserver(handleIntersect, {
+      root: null,
+      rootMargin: "0px 0px -70% 0px", // adjust for your sticky nav height
+      threshold: 0.1,
+    });
+
+    categoryIds.forEach((id) => {
+      const el = sectionRefs.current[id];
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [categoryIds]);
 
   return {
     activeCategory,

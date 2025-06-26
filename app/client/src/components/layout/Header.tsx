@@ -14,13 +14,13 @@ export default function Header() {
         isRestaurantPage ? "sticky top-0 z-50" : ""
       }`}
     >
-      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="logo" width={130} height={30} />
           </Link>
 
-          <nav className="flex items-center gap-4">
+          <nav className="flex items-center gap-2 sm:gap-4">
             <Link
               href="/login"
               className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
