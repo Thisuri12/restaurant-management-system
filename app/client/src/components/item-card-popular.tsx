@@ -9,7 +9,7 @@ interface ItemCardProps {
   onClick: (item: MenuItem) => void;
 }
 
-export function ItemCard({ item, onClick }: ItemCardProps) {
+export function ItemCardPopular({ item, onClick }: ItemCardProps) {
   return (
     <div
       className="w-full max-w-lg h-auto 3xl:h-[180px] bg-white rounded-sm shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
