@@ -12,7 +12,7 @@ interface ItemCardProps {
 export function ItemCard({ item, onClick }: ItemCardProps) {
   return (
     <div
-      className="w-full max-w-lg h-auto sm:h-[120px] md:h-[150px] lg:h-[190px] bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
+      className="w-full max-w-lg h-auto 3xl:h-[180px] bg-white rounded-sm shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
       onClick={() => onClick(item)}
     >
       <div className="flex">
@@ -29,33 +29,36 @@ export function ItemCard({ item, onClick }: ItemCardProps) {
           </p>
 
           <div className="flex items-center gap-2">
-            <span className="text-lg text-gray-900">
+            <span className="text-sm text-gray-900">
               £{item.price.toFixed(2)}
+              {(item.popular || item.deal) && (
+                <>
+                  .{" "}
+                  <span className="text-sm font-normal text-orange-800">
+                    {item.popular ? "Popular" : "Deal"}
+                  </span>
+                </>
+              )}
             </span>
-            {(item.popular || item.deal) && (
-              <span className="px-1.5 py-.5 text-md font-normal text-orange-800 shrink-0">
-                {item.popular ? "Popular" : "Deal"}
-              </span>
-            )}
           </div>
         </div>
 
         {/* Item Image */}
-        <div className="relative w-20 h-20 md:w-32 md:h-32 shrink-0 mt-5 mr-5 mb-5">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0 my-3 mr-3 sm:my-5 sm:mr-5">
           <Image
             src={item.image}
             alt={item.name}
-            width={70}
-            height={70}
-            className="w-full h-full object-cover rounded-sm"
+            fill
+            className="object-cover rounded-sm"
+            sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 112px, 128px"
           />
 
           {/* Button overlayed on bottom-right */}
           <button
-            className="absolute -bottom-6 right-1 bg-white text-customGray/20 p-3 rounded-full shadow-md transition-colors"
+            className="absolute -bottom-3 -right-3 bg-white text-customGray/20 p-3 rounded-full shadow-md transition-colors"
             onClick={() => onClick(item)}
           >
-            <Plus className="h-6 w-6" />
+            <Plus className="h-4 w-4" />
           </button>
         </div>
       </div>

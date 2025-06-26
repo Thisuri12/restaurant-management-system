@@ -45,4 +45,6 @@ export interface MenuSectionCategory {
   id: string;
   name: string;
   description?: string;
+  popular?: boolean;
+  items?: MenuItem[];
 }

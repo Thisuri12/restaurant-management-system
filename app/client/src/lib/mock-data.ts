@@ -13,87 +13,6 @@ export const menuData: MenuData = {
   },
   categories: [
     {
-      id: "popular",
-      name: "Popular with other people",
-      items: [
-        {
-          id: 1,
-          name: "Caesar Salad",
-          description:
-            "Crisp romaine lettuce, parmesan, croutons, caesar dressing",
-          price: 8.95,
-          image:
-            "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 2,
-          name: "Chicken Wrap",
-          description:
-            "Grilled chicken, mixed greens, tomatoes, cucumber in a tortilla wrap",
-          price: 7.5,
-          image:
-            "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 11,
-          name: "Veggie Sandwich",
-          description:
-            "Whole grain bread with avocado, sprouts, tomato and hummus",
-          price: 6.95,
-          image:
-            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 12,
-          name: "BBQ Chicken Pizza",
-          description: "Grilled chicken, BBQ sauce, mozzarella cheese",
-          price: 11.5,
-          image:
-            "https://images.unsplash.com/photo-1548365328-8347c6b850de?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 13,
-          name: "Margherita Pizza",
-          description: "Classic tomato, basil, and mozzarella",
-          price: 10.0,
-          image:
-            "https://images.unsplash.com/photo-1548365328-8347c6b850de?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 14,
-          name: "Avocado Toast",
-          description: "Sourdough bread with mashed avocado and chili flakes",
-          price: 5.95,
-          image:
-            "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 15,
-          name: "Buffalo Wings",
-          description: "Spicy chicken wings with blue cheese dip",
-          price: 9.5,
-          image:
-            "https://images.unsplash.com/photo-1506354666786-959d6d497f1a?w=400&h=300&fit=crop",
-          popular: true,
-        },
-        {
-          id: 16,
-          name: "Chocolate Brownie",
-          description: "Rich chocolate brownie with walnuts",
-          price: 4.5,
-          image:
-            "https://images.unsplash.com/photo-1559622210-3e1d71a9e1d9?w=400&h=300&fit=crop",
-          popular: true,
-        },
-      ],
-    },
-    {
       id: "deals",
       name: "Meal Deals",
       items: [
@@ -168,6 +87,7 @@ export const menuData: MenuData = {
           image:
             "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop",
           deal: true,
+          popular: true,
         },
       ],
     },
@@ -191,6 +111,7 @@ export const menuData: MenuData = {
           price: 10.5,
           image:
             "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 23,
@@ -207,6 +128,7 @@ export const menuData: MenuData = {
           price: 12.5,
           image:
             "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 25,
@@ -223,6 +145,7 @@ export const menuData: MenuData = {
           price: 9.5,
           image:
             "https://images.unsplash.com/photo-1559496417-e7f25cb247cd?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 27,
@@ -285,6 +208,7 @@ export const menuData: MenuData = {
           price: 8.75,
           image:
             "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 32,
@@ -331,6 +255,7 @@ export const menuData: MenuData = {
           price: 3.95,
           image:
             "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 35,
@@ -818,7 +743,7 @@ export const menuData: MenuData = {
       name: "SBffsdbb",
       items: [
         {
-          id: 73,
+          id: 89,
           name: "Spaghetti Carbonara",
           description:
             "Classic Italian pasta with eggs, cheese, pancetta, and pepper",
@@ -827,7 +752,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&h=300&fit=crop",
         },
         {
-          id: 74,
+          id: 90,
           name: "Penne Arrabbiata",
           description: "Penne pasta with spicy tomato sauce and garlic",
           price: 9.75,
@@ -835,7 +760,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1512058564366-c9e7aa01e1e8?w=400&h=300&fit=crop",
         },
         {
-          id: 75,
+          id: 91,
           name: "Fettuccine Alfredo",
           description: "Creamy Alfredo sauce with parmesan cheese and butter",
           price: 11.0,
@@ -843,7 +768,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400&h=300&fit=crop",
         },
         {
-          id: 76,
+          id: 92,
           name: "Lasagna",
           description:
             "Layers of pasta, meat sauce, ricotta, and mozzarella cheese",
@@ -852,7 +777,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1572441710480-5483f9e5b927?w=400&h=300&fit=crop",
         },
         {
-          id: 77,
+          id: 93,
           name: "Ravioli",
           description:
             "Stuffed pasta with ricotta and spinach, served with marinara",
@@ -861,7 +786,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1568051243852-0c5b0a1ec324?w=400&h=300&fit=crop",
         },
         {
-          id: 78,
+          id: 94,
           name: "Pesto Pasta",
           description: "Penne pasta with fresh basil pesto sauce and pine nuts",
           price: 9.95,
@@ -869,7 +794,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1525755662778-989d0524087e8?w=400&h=300&fit=crop",
         },
         {
-          id: 79,
+          id: 95,
           name: "Seafood Linguine",
           description:
             "Linguine pasta with mixed seafood in a garlic white wine sauce",
@@ -878,7 +803,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
         },
         {
-          id: 80,
+          id: 96,
           name: "Mac and Cheese",
           description: "Baked macaroni pasta with creamy cheese sauce",
           price: 8.95,
@@ -893,7 +818,7 @@ export const menuData: MenuData = {
       name: "BDBDGBdgbndg",
       items: [
         {
-          id: 73,
+          id: 97,
           name: "Spaghetti Carbonara",
           description:
             "Classic Italian pasta with eggs, cheese, pancetta, and pepper",
@@ -902,7 +827,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&h=300&fit=crop",
         },
         {
-          id: 74,
+          id: 98,
           name: "Penne Arrabbiata",
           description: "Penne pasta with spicy tomato sauce and garlic",
           price: 9.75,
@@ -910,7 +835,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1512058564366-c9e7aa01e1e8?w=400&h=300&fit=crop",
         },
         {
-          id: 75,
+          id: 99,
           name: "Fettuccine Alfredo",
           description: "Creamy Alfredo sauce with parmesan cheese and butter",
           price: 11.0,
@@ -918,25 +843,27 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400&h=300&fit=crop",
         },
         {
-          id: 76,
+          id: 100,
           name: "Lasagna",
           description:
             "Layers of pasta, meat sauce, ricotta, and mozzarella cheese",
           price: 12.5,
           image:
             "https://images.unsplash.com/photo-1572441710480-5483f9e5b927?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
-          id: 77,
+          id: 101,
           name: "Ravioli",
           description:
             "Stuffed pasta with ricotta and spinach, served with marinara",
           price: 10.25,
           image:
             "https://images.unsplash.com/photo-1568051243852-0c5b0a1ec324?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
-          id: 78,
+          id: 102,
           name: "Pesto Pasta",
           description: "Penne pasta with fresh basil pesto sauce and pine nuts",
           price: 9.95,
@@ -944,7 +871,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1525755662778-989d0524087e8?w=400&h=300&fit=crop",
         },
         {
-          id: 79,
+          id: 103,
           name: "Seafood Linguine",
           description:
             "Linguine pasta with mixed seafood in a garlic white wine sauce",
@@ -953,7 +880,7 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
         },
         {
-          id: 80,
+          id: 104,
           name: "Mac and Cheese",
           description: "Baked macaroni pasta with creamy cheese sauce",
           price: 8.95,
@@ -968,7 +895,7 @@ export const menuData: MenuData = {
       name: "SFbDFBdGBgng",
       items: [
         {
-          id: 73,
+          id: 105,
           name: "Spaghetti Carbonara",
           description:
             "Classic Italian pasta with eggs, cheese, pancetta, and pepper",
@@ -977,15 +904,16 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&h=300&fit=crop",
         },
         {
-          id: 74,
+          id: 106,
           name: "Penne Arrabbiata",
           description: "Penne pasta with spicy tomato sauce and garlic",
           price: 9.75,
           image:
             "https://images.unsplash.com/photo-1512058564366-c9e7aa01e1e8?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
-          id: 75,
+          id: 107,
           name: "Fettuccine Alfredo",
           description: "Creamy Alfredo sauce with parmesan cheese and butter",
           price: 11.0,
@@ -993,16 +921,17 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400&h=300&fit=crop",
         },
         {
-          id: 76,
+          id: 108,
           name: "Lasagna",
           description:
             "Layers of pasta, meat sauce, ricotta, and mozzarella cheese",
           price: 12.5,
           image:
             "https://images.unsplash.com/photo-1572441710480-5483f9e5b927?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
-          id: 77,
+          id: 109,
           name: "Ravioli",
           description:
             "Stuffed pasta with ricotta and spinach, served with marinara",
@@ -1011,15 +940,16 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1568051243852-0c5b0a1ec324?w=400&h=300&fit=crop",
         },
         {
-          id: 78,
+          id: 110,
           name: "Pesto Pasta",
           description: "Penne pasta with fresh basil pesto sauce and pine nuts",
           price: 9.95,
           image:
             "https://images.unsplash.com/photo-1525755662778-989d0524087e8?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
-          id: 79,
+          id: 111,
           name: "Seafood Linguine",
           description:
             "Linguine pasta with mixed seafood in a garlic white wine sauce",
@@ -1028,12 +958,13 @@ export const menuData: MenuData = {
             "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
         },
         {
-          id: 80,
+          id: 112,
           name: "Mac and Cheese",
           description: "Baked macaroni pasta with creamy cheese sauce",
           price: 8.95,
           image:
             "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=300&fit=crop",
+          popular: true,
         },
       ],
     },
