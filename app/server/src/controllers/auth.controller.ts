@@ -146,13 +146,6 @@ export const refreshToken = async (
       return;
     }
 
-    if (tokenBlacklist.has(refreshToken)) {
-      res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "Invalid refresh token" });
-      return;
-    }
-
     const decoded = verifyToken(refreshToken);
     const user = await User.findByPk(decoded.userId);
 
