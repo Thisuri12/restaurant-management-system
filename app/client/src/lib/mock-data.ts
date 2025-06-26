@@ -184,6 +184,7 @@ export const menuData: MenuData = {
           price: 7.95,
           image:
             "https://images.unsplash.com/photo-1559496417-e7f25cb247cd?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 29,
@@ -200,6 +201,7 @@ export const menuData: MenuData = {
           price: 9.5,
           image:
             "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 31,
@@ -217,6 +219,7 @@ export const menuData: MenuData = {
           price: 10.5,
           image:
             "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 33,
@@ -247,6 +250,7 @@ export const menuData: MenuData = {
           price: 4.95,
           image:
             "https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 10,
@@ -272,6 +276,7 @@ export const menuData: MenuData = {
           price: 5.75,
           image:
             "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 37,
@@ -288,6 +293,7 @@ export const menuData: MenuData = {
           price: 3.0,
           image:
             "https://images.unsplash.com/photo-1562440499-6441e292ac47?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 39,
@@ -304,6 +310,7 @@ export const menuData: MenuData = {
           price: 4.0,
           image:
             "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop",
+          popular: true,
         },
       ],
     },
@@ -350,6 +357,7 @@ export const menuData: MenuData = {
           price: 5.5,
           image:
             "https://images.unsplash.com/photo-1562440499-6441e292ac47?w=400&h=300&fit=crop",
+          popular: true,
         },
         {
           id: 46,

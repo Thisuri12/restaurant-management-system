@@ -123,11 +123,11 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
                   msOverflowStyle: "none",
                 }}
               >
-                <div className="flex gap-1 pb-4 w-max">
+                <div className="flex gap-4 pb-4 w-max">
                   {popularItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex-shrink-0 w-28 sm:w-32 md:w-40"
+                      className="flex-shrink-0 w-[50px] h-[200px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] "
                     >
                       <ItemCardPopular
                         item={item}
