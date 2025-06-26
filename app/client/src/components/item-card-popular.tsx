@@ -15,7 +15,7 @@ export function ItemCardPopular({ item, onClick }: ItemCardProps) {
       className="w-36 h-auto sm:h-[200px] md:h-[300px] lg:h-[350px] bg-white rounded-xs shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer flex flex-col"
       onClick={() => onClick(item)}
     >
-      {/* Item Image - Centered */}
+      {/* Item Image*/}
       <div className="relative w-20 h-20 md:w-36 md:h-36 shrink-0 mb-5 rounded-sm overflow-hidden">
         <Image src={item.image} alt={item.name} fill className="object-cover" />
 
