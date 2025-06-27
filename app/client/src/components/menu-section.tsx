@@ -117,7 +117,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
               {/* Scrollable Container */}
               <div
                 ref={scrollRef}
-                className="overflow-x-auto scrollbar-hide px-4 h-[300px] sm:h-[300px] lg:h-[300px] 3xl:h-[420px] max-h-[300px] sm:max-h-[300px] lg:max-h-[300px] 3xl:max-h-[420px]"
+                className="overflow-x-auto scrollbar-hide px-4 h-[300px] sm:h-[300px] lg:h-[320px] 3xl:h-[420px] max-h-[300px] sm:max-h-[300px] lg:max-h-[320px] 3xl:max-h-[420px]"
                 style={{
                   scrollbarWidth: "none",
                   msOverflowStyle: "none",
