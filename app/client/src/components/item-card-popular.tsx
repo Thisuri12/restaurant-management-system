@@ -12,11 +12,11 @@ interface ItemCardProps {
 export function ItemCardPopular({ item, onClick }: ItemCardProps) {
   return (
     <div
-      className="w-[50px] h-[200px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] bg-white rounded-xs shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer flex flex-col"
+      className="w-[100px] h-[300px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] bg-white rounded-xs shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer flex flex-col"
       onClick={() => onClick(item)}
     >
       {/* Item Image */}
-      <div className="relative w-[50px] lg:w-[120px] 3xl:w-[200px] h-[50px] lg:h-[120px] 3xl:h-[200px]">
+      <div className="relative w-[100px] lg:w-[120px] 3xl:w-[200px] h-[100px] lg:h-[120px] 3xl:h-[200px]">
         <Image
           src={item.image}
           alt={item.name}

@@ -96,10 +96,10 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
               {canScrollLeft && (
                 <button
                   onClick={scrollLeft}
-                  className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  className="hidden sm:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
                   aria-label="Scroll left"
                 >
-                  <ArrowLeft className=" h-5 w-5 text-gray-600" />
+                  <ArrowLeft className=" h-6 w-6 text-customGreen" />
                 </button>
               )}
 
@@ -107,17 +107,17 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
               {canScrollRight && (
                 <button
                   onClick={scrollRight}
-                  className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  className="hidden sm:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
                   aria-label="Scroll right"
                 >
-                  <ArrowRight className="h-5 w-5 text-gray-600" />
+                  <ArrowRight className="h-6 w-6 text-customGreen" />
                 </button>
               )}
 
               {/* Scrollable Container */}
               <div
                 ref={scrollRef}
-                className="overflow-x-auto scrollbar-hide px-4"
+                className="overflow-x-auto scrollbar-hide px-4 h-[300px] sm:h-[300px] lg:h-[300px] 3xl:h-[420px] max-h-[300px] sm:max-h-[300px] lg:max-h-[300px] 3xl:max-h-[420px]"
                 style={{
                   scrollbarWidth: "none",
                   msOverflowStyle: "none",
@@ -127,7 +127,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
                   {popularItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex-shrink-0 w-[50px] h-[200px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] "
+                      className="flex-shrink-0 w-[100px] h-[200px] sm:w-[140px] sm:h-[250px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px]"
                     >
                       <ItemCardPopular
                         item={item}
