@@ -2,11 +2,14 @@ import { Restaurant } from "../models/restaurant.model";
 import { generateFakeRestaurant } from "../utils/fakers/restaurant.faker";
 import sequelize from "../config/database";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const seedRestaurants = async () => {
   try {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
 
-    const restaurantCount = 10;
+    const restaurantCount = 50;
 
     for (let i = 0; i < restaurantCount; i++) {
       await Restaurant.create(generateFakeRestaurant());
