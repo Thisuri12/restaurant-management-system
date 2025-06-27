@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
+import { useParams } from "next/navigation";
+import { fetchRestaurantById } from "@/lib/api";
 import { RestaurantHeader } from "@/components/restaurant-header";
 import { CategoryNav } from "@/components/category-nav";
 import { MenuSection } from "@/components/menu-section";
@@ -7,25 +10,37 @@ import { CartSummary } from "@/components/cart-summary";
 import { ItemModal } from "@/components/item-modal";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
 import { useMenuStore } from "@/stores/menu-store";
-import { menuData } from "@/lib/mock-data";
-import type { MenuItem, MenuSectionCategory } from "@/lib/types";
-import { useEffect, useMemo } from "react";
+import type { MenuItem, MenuSectionCategory, Restaurant } from "@/lib/types";
 
 export default function RestaurantMenuPage() {
+  const { id } = useParams();
+  const [restaurantData, setRestaurantData] = useState<Restaurant | null>(null);
+
   const { selectedItem, setSelectedItem, setActiveCategory } = useMenuStore();
 
-  // Get all items from all categories
-  const allItems = useMemo(() => {
-    return menuData.categories.flatMap((category) => category.items);
-  }, []);
+  // Fetch restaurant data when ID is available
+  useEffect(() => {
+    if (!id) return;
+    fetchRestaurantById(id as string)
+      .then(setRestaurantData)
+      .catch((err) => console.error("Failed to fetch restaurant:", err));
+  }, [id]);
 
-  // Check if there are any popular items across all categories
-  const popularItems = useMemo(() => {
-    return allItems.filter((item) => item.popular === true);
-  }, [allItems]);
+  // Use data from API instead of mock
+  const allItems = useMemo(() => {
+    if (!restaurantData?.categories) return [];
+    return restaurantData.categories
+      .flatMap((cat) => cat.items ?? [])
+      .filter((item): item is MenuItem => !!item);
+  }, [restaurantData]);
+
+  const popularItems = useMemo(
+    () => allItems.filter((item): item is MenuItem => !!item && !!item.popular),
+    [allItems]
+  );
 
   const hasPopularItems = popularItems.length > 0;
-  // Create a virtual popular category only if there are popular items
+
   const popularCategory: MenuSectionCategory | null = hasPopularItems
     ? {
         id: "popular-section",
@@ -34,18 +49,38 @@ export default function RestaurantMenuPage() {
       }
     : null;
 
-  // Create category IDs - include popular section only if it exists
   const categoryIds = useMemo(() => {
-    const regularCategoryIds = menuData.categories.map(
-      (category) => category.id
-    );
-    return hasPopularItems
-      ? ["popular-section", ...regularCategoryIds]
-      : regularCategoryIds;
-  }, [hasPopularItems]);
+    if (!restaurantData?.categories) return [];
+    const ids = restaurantData.categories.map((cat) => cat.id);
+    return hasPopularItems ? ["popular-section", ...ids] : ids;
+  }, [restaurantData, hasPopularItems]);
 
   const { activeCategory, scrollToCategory, setCategoryRef } =
     useScrollSpy(categoryIds);
+
+  useEffect(() => {
+    setActiveCategory(activeCategory);
+  }, [activeCategory, setActiveCategory]);
+
+  // Use categories from API instead of menuData
+  const navCategories = useMemo(() => {
+    if (!restaurantData?.categories) return [];
+    const base = restaurantData.categories.map((cat) => ({
+      id: cat.id,
+      name: cat.name,
+      count: cat.items?.length ?? 0,
+    }));
+    return hasPopularItems
+      ? [
+          {
+            id: "popular-section",
+            name: "Popular",
+            count: popularItems.length,
+          },
+          ...base,
+        ]
+      : base;
+  }, [restaurantData, popularItems.length, hasPopularItems]);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);
@@ -55,39 +90,15 @@ export default function RestaurantMenuPage() {
     setSelectedItem(null);
   };
 
-  // Keep global store in sync with scroll spy
-  useEffect(() => {
-    setActiveCategory(activeCategory);
-  }, [activeCategory, setActiveCategory]);
-
-  // Create navigation items - include popular section only if it exists
-  const navCategories = useMemo(() => {
-    const regularCategories = menuData.categories.map((cat) => ({
-      id: cat.id,
-      name: cat.name,
-      count: cat.items.length,
-    }));
-
-    if (hasPopularItems) {
-      return [
-        {
-          id: "popular-section",
-          name: "Popular",
-          count: popularItems.length,
-        },
-        ...regularCategories,
-      ];
-    }
-
-    return regularCategories;
-  }, [hasPopularItems, popularItems.length]);
+  // Loading fallback
+  if (!restaurantData) {
+    return <p className="p-4 text-center">Loading restaurant...</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Restaurant Header */}
-      <RestaurantHeader restaurant={menuData.restaurant} />
+      <RestaurantHeader restaurant={restaurantData} />
 
-      {/* Category Navigation - Sticky */}
       <div className="sticky top-[58px] md:top-[75px] z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         <CategoryNav
           categories={navCategories}
@@ -98,31 +109,28 @@ export default function RestaurantMenuPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
-          {/* Left side - Scrollable menu */}
+          {/* Menu */}
           <div className="space-y-8 min-w-0">
-            {/* Popular Section - Only render if there are popular items */}
+            {/* Conditional render for popular section */}
             {hasPopularItems && popularCategory && (
               <MenuSection
                 key="popular-section"
                 ref={setCategoryRef("popular-section")}
                 category={popularCategory}
-                items={[]} // Empty since we're using allItems for popular
+                items={popularItems}
                 allItems={allItems}
-                isPopularSection={true}
+                isPopularSection
                 onItemClick={handleItemClick}
               />
             )}
 
-            {/* Regular Categories */}
-            {menuData.categories.map((category) => (
+            {/* Render dynamic categories and items */}
+            {(restaurantData.categories ?? []).map((category) => (
               <MenuSection
                 key={category.id}
                 ref={setCategoryRef(category.id)}
-                category={{
-                  id: category.id,
-                  name: category.name,
-                }}
-                items={category.items}
+                category={{ id: category.id, name: category.name }}
+                items={category.items ?? []}
                 allItems={allItems}
                 isPopularSection={false}
                 onItemClick={handleItemClick}
@@ -130,7 +138,7 @@ export default function RestaurantMenuPage() {
             ))}
           </div>
 
-          {/* Right side - Cart Summary (Sticky) */}
+          {/* Cart */}
           <div className="lg:sticky lg:top-[150px] lg:self-start lg:max-h-[calc(100vh-170px)] lg:overflow-y-auto">
             <CartSummary />
           </div>
@@ -139,11 +147,7 @@ export default function RestaurantMenuPage() {
 
       {/* Item Modal */}
       {selectedItem && (
-        <ItemModal
-          item={selectedItem}
-          isOpen={true}
-          onClose={handleCloseModal}
-        />
+        <ItemModal item={selectedItem} isOpen onClose={handleCloseModal} />
       )}
     </div>
   );

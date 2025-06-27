@@ -11,9 +11,10 @@ interface RestaurantHeaderProps {
 }
 
 export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
-  const formatTime = (time: string) => {
+  const formatTime = (time?: string) => {
+    if (!time) return "";
     const [hours, minutes] = time.split(":");
-    const hour = parseInt(hours);
+    const hour = parseInt(hours, 10);
     const ampm = hour >= 12 ? "PM" : "AM";
     const displayHour = hour % 12 || 12;
     return `${displayHour}:${minutes} ${ampm}`;
@@ -35,14 +36,21 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
         <div className="flex flex-col md:flex-row items-start gap-2 px-0 py-0 sm:px-2 sm:py-2 md:px-6">
           {/* Image with Start group order button and back button overlayed on mobile */}
           <div className="relative w-full md:w-1/3 h-56 sm:h-72 md:h-auto aspect-auto md:aspect-[16/9] rounded overflow-hidden flex-shrink-0 bg-black">
-            <Image
-              src={restaurant.image}
-              alt={restaurant.name}
-              fill
-              sizes="100vw"
-              className="object-cover"
-              priority
-            />
+            {restaurant.image ? (
+              <Image
+                src={restaurant.image}
+                alt={restaurant.name}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+            ) : (
+              // Optionally, render a fallback image or a placeholder div
+              <div className="w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-400">
+                No image
+              </div>
+            )}
             {/* Back button on image for mobile */}
             <Link
               href="https://deliveroo.co.uk/restaurants/london/st-james's?geohash=gcpvj0e56cwp"
@@ -107,7 +115,10 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
                 Delivery: {restaurant.deliveryFee}
               </span>
               <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
-                Min order: £{restaurant.min_price.toFixed(2)}
+                Min order: £
+                {restaurant.min_price !== undefined
+                  ? restaurant.min_price.toFixed(2)
+                  : "N/A"}
               </span>
               <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
                 30-45 min

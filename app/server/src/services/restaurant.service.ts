@@ -54,4 +54,9 @@ export const restaurantService = {
     await restaurant.destroy();
     return true;
   },
+
+  //Finds a restaurant by its primary key
+  async findById(id: string | number) {
+    return await Restaurant.findByPk(id, { include: [/* associations here */] });
+  },
 };

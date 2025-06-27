@@ -7,6 +7,7 @@ export interface Restaurant {
   min_price: number;
   deliveryFee: string;
   image: string;
+  categories: MenuSectionCategory[];
 }
 
 export interface MenuItem {

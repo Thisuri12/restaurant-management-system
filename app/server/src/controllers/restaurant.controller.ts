@@ -121,3 +121,28 @@ export const deleteRestaurant = async (
     next(error);
   }
 };
+
+//Handles fetching a single restaurant by ID
+export const findRestaurantById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const restaurant = await restaurantService.findById(id);
+
+    if (!restaurant) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        message: "Restaurant not found",
+      });
+      return;
+    }
+
+    res.status(StatusCodes.OK).json({
+      data: restaurant,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
