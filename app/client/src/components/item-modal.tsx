@@ -36,15 +36,15 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
 
       {/* Modal */}
       <div
-        className=" relative w-full h-full sm:h-auto sm:w-full sm:max-w-[28rem] sm:max-h-[38rem] lg:max-w-[30rem] lg:max-h-[40rem] 
-        aspect-[3/4] transform overflow-hidden rounded-none sm:rounded-sm bg-white text-left shadow-xl transition-all flex flex-col overflow-y-auto"
+        className="relative w-full h-full sm:h-auto sm:w-full sm:max-w-[28rem] sm:max-h-[38rem] lg:max-w-[30rem] lg:max-h-[40rem] 
+        aspect-[3/4] transform overflow-hidden rounded-none sm:rounded-sm bg-white dark:bg-gray-900 text-left shadow-xl transition-all flex flex-col overflow-y-auto"
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="border absolute right-4 top-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-customGreen focus:border-customGreen active:shadow-md transition"
+          className="border border-gray-200 dark:border-gray-700 absolute right-4 top-4 z-10 p-2 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full focus:outline-none focus:ring-2 focus:ring-customGreen focus:border-customGreen active:shadow-md transition"
         >
-          <X className="h-5 w-5" />
+          <X className="h-5 w-5 text-gray-900 dark:text-gray-100" />
         </button>
 
         {/* Item image */}
@@ -62,13 +62,15 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
         <div className="px-6 py-6 flex-1 flex flex-col">
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 {item.name}
               </h2>
             </div>
           </div>
 
-          <p className="text-gray-600 mb-6">{item.description}</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {item.description}
+          </p>
 
           {/* Quantity selector fixed at bottom on mobile */}
           <div className="flex-1 flex flex-col justify-end">
@@ -77,18 +79,18 @@ export function ItemModal({ item, isOpen, onClose }: ItemModalProps) {
                 <button
                   onClick={decrementQuantity}
                   disabled={quantity <= 1}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Minus className="h-4 w-4" />
+                  <Minus className="h-4 w-4 text-gray-900 dark:text-gray-100" />
                 </button>
-                <span className="text-lg font-medium min-w-[3rem] text-center">
+                <span className="text-lg font-medium min-w-[3rem] text-center text-gray-900 dark:text-gray-100">
                   {quantity}
                 </span>
                 <button
                   onClick={incrementQuantity}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50"
+                  className="p-2 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-4 w-4 text-gray-900 dark:text-gray-100" />
                 </button>
               </div>
               {/* Add to cart button below quantity */}

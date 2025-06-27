@@ -12,7 +12,7 @@ interface ItemCardProps {
 export function ItemCardPopular({ item, onClick }: ItemCardProps) {
   return (
     <div
-      className="w-[100px] h-[300px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] bg-white rounded-xs shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer flex flex-col"
+      className="w-[100px] h-[300px] lg:w-[120px] lg:h-[300px] 3xl:w-[200px] 3xl:h-[400px] bg-white dark:bg-gray-900 rounded-sm dark:rounded-xs shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer flex flex-col"
       onClick={() => onClick(item)}
     >
       {/* Item Image */}
@@ -27,7 +27,7 @@ export function ItemCardPopular({ item, onClick }: ItemCardProps) {
 
         {/* Button overlayed on bottom-right */}
         <button
-          className="absolute -bottom-3 right-1 bg-white text-customGray/20 p-3 rounded-full shadow-md transition-colors"
+          className="absolute -bottom-3 right-1 bg-white dark:bg-gray-900 text-customGray/20 dark:text-gray-400 p-3 rounded-full shadow-md transition-colors"
           onClick={(e) => {
             e.stopPropagation();
             onClick(item);
@@ -40,22 +40,22 @@ export function ItemCardPopular({ item, onClick }: ItemCardProps) {
         {/* Item Info */}
         <div>
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-tight">
               {item.name}
             </h3>
           </div>
 
-          <p className="text-gray-600 text-xs mb-3 line-clamp-2">
+          <p className="text-gray-600 dark:text-gray-300 text-xs mb-3 line-clamp-2">
             {item.description}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-auto">
-          <span className="text-sm text-gray-900">
+          <span className="text-sm text-gray-900 dark:text-gray-100">
             £{item.price.toFixed(2)}
             {(item.popular || item.deal) && (
               <>
                 .{" "}
-                <span className="text-sm font-normal text-orange-800">
+                <span className="text-sm font-normal text-orange-800 dark:text-orange-300">
                   {item.popular ? "Popular" : "Deal"}
                 </span>
               </>

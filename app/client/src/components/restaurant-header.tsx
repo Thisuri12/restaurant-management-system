@@ -20,7 +20,7 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
   };
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto items-start text-left px-0 sm:px-2 md:px-10">
         <div className="mb-4 hidden md:block">
           <Link
@@ -46,7 +46,7 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
             {/* Back button on image for mobile */}
             <Link
               href="https://deliveroo.co.uk/restaurants/london/st-james's?geohash=gcpvj0e56cwp"
-              className="absolute top-3 left-3 flex md:hidden items-center justify-center bg-white rounded-full border border-gray-200 shadow w-10 h-10"
+              className="absolute top-3 left-3 flex md:hidden items-center justify-center bg-white dark:bg-gray-900 rounded-full border border-gray-200 dark:border-gray-700 shadow w-10 h-10"
             >
               <ArrowLeft className="h-5 w-5 text-customGreen" />
             </Link>
@@ -54,11 +54,11 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
             <div className="absolute bottom-3 right-3 flex md:hidden">
               <Link
                 href="/"
-                className="flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans w-fit shadow"
+                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-colors font-thin font-sans w-fit shadow"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-teal-500"
+                  className="w-4 h-4 text-teal-500 dark:text-teal-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -78,11 +78,11 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
           {/* Info on the right */}
           <div className="flex-1 flex flex-col px-2 sm:px-4 md:px-6 py-2 justify-between w-full">
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
+              <h1 className="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">
                 {restaurant.name}
               </h1>
 
-              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6">
+              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
                 <div className="flex items-center gap-1">
                   <MapPin className="h-4 w-4" />
                   <span>{restaurant.location}</span>
@@ -103,13 +103,13 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
 
             {/* Delivery info badges */}
             <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-xs sm:text-sm">
-              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 rounded">
+              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
                 Delivery: {restaurant.deliveryFee}
               </span>
-              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 rounded">
+              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
                 Min order: £{restaurant.min_price.toFixed(2)}
               </span>
-              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 rounded">
+              <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
                 30-45 min
               </span>
             </div>
@@ -119,11 +119,11 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
           <div className="hidden md:flex px-6">
             <Link
               href="/"
-              className="flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
+              className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-colors font-thin font-sans"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 text-teal-500"
+                className="w-4 h-4 text-teal-500 dark:text-teal-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

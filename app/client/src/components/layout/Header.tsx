@@ -3,14 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useDarkMode } from "@/hooks/useDarkMode";
+import { Moon, Sun } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
   const isRestaurantPage = pathname.startsWith("/restaurant");
+  const { isDark, toggleDarkMode } = useDarkMode();
 
   return (
     <header
-      className={`bg-white shadow-sm border-b border-gray-100 mt-2 mb-2 ${
+      className={`bg-white dark:bg-gray-900 shadow-sm border-b border-gray-100 dark:border-gray-800 mt-2 mb-2 ${
         isRestaurantPage ? "sticky top-0 z-50" : ""
       }`}
     >
@@ -23,11 +26,11 @@ export default function Header() {
           <nav className="flex items-center gap-2 sm:gap-4">
             <Link
               href="/login"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors font-thin font-sans"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 text-teal-500"
+                className="w-4 h-4 text-teal-500 dark:text-teal-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -43,11 +46,11 @@ export default function Header() {
             </Link>
             <Link
               href="/account"
-              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-sm text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors font-thin font-sans"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors font-thin font-sans"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 text-teal-500"
+                className="w-4 h-4 text-teal-500 dark:text-teal-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -61,6 +64,17 @@ export default function Header() {
               </svg>
               <span className="hidden md:inline">Account</span>
             </Link>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 transition-all duration-300"
+              aria-label="Toggle Dark Mode"
+            >
+              {isDark ? (
+                <Sun className="w-5 h-5 text-yellow-400" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-800 dark:text-white" />
+              )}
+            </button>
           </nav>
         </div>
       </div>

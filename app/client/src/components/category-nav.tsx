@@ -124,7 +124,7 @@ export function CategoryNav({
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-white border-b">
+    <nav className="w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-8">
         <div
           ref={navRef}
@@ -143,7 +143,7 @@ export function CategoryNav({
                 "flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap",
                 activeCategory === category.id
                   ? "bg-customGreen text-white shadow-sm font-bold h-6"
-                  : "text-customGreen h-6"
+                  : "text-customGreen dark:text-gray-100 h-6"
               )}
             >
               <span>{category.name}</span>
@@ -159,7 +159,7 @@ export function CategoryNav({
                     "px-4 py-2 text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-customGreen focus:border-customGreen active:shadow-md transition focus:ring-offset-1 flex items-center gap-1",
                     isActiveHidden
                       ? "bg-customGreen text-white shadow-sm font-bold"
-                      : "text-customGreen"
+                      : "text-customGreen dark:text-gray-100"
                   )}
                 >
                   {/* Show active hidden name or "More" */}
@@ -196,16 +196,19 @@ export function CategoryNav({
                     </svg>
                   )}
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
+                >
                   {hiddenCategories.map((category) => (
                     <DropdownMenuItem
                       key={category.id}
                       onClick={() => handleScrollToCategory(category.id)}
                       className={cn(
                         activeCategory === category.id
-                          ? "font-bold text-customGreen bg-white"
+                          ? "font-bold text-customGreen bg-white dark:bg-gray-800"
                           : "",
-                        "bg-white cursor-pointer hover:bg-gray-50"
+                        "bg-white dark:bg-gray-900 dark:text-gray-100 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
                       )}
                     >
                       {category.name}

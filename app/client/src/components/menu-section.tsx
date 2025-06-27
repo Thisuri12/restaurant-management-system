@@ -84,22 +84,21 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-6 px-4">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               {category.name}
             </h2>
           </div>
 
           {isPopularSection ? (
-            // Horizontal scrolling layout for Popular section with arrows
             <div className="relative w-full">
               {/* Left Arrow */}
               {canScrollLeft && (
                 <button
                   onClick={scrollLeft}
-                  className="hidden sm:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
+                  className="hidden sm:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-900 shadow-lg rounded-full p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-700"
                   aria-label="Scroll left"
                 >
-                  <ArrowLeft className=" h-6 w-6 text-customGreen" />
+                  <ArrowLeft className="h-6 w-6 text-customGreen" />
                 </button>
               )}
 
@@ -107,7 +106,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
               {canScrollRight && (
                 <button
                   onClick={scrollRight}
-                  className="hidden sm:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
+                  className="hidden sm:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-900 shadow-lg rounded-full p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-700"
                   aria-label="Scroll right"
                 >
                   <ArrowRight className="h-6 w-6 text-customGreen" />
@@ -117,7 +116,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
               {/* Scrollable Container */}
               <div
                 ref={scrollRef}
-                className="overflow-x-auto scrollbar-hide px-4 h-[300px] sm:h-[300px] lg:h-[320px] 3xl:h-[420px] max-h-[300px] sm:max-h-[300px] lg:max-h-[320px] 3xl:max-h-[420px]"
+                className="overflow-x-auto scrollbar-hide px-4 h-[300px] sm:h-[300px] lg:h-[320px] 3xl:h-[420px] max-h-[300px] sm:max-h-[300px] lg:max-h-[320px] 3xl:max-h-[420px] bg-white dark:bg-gray-900 rounded-sm"
                 style={{
                   scrollbarWidth: "none",
                   msOverflowStyle: "none",

@@ -12,29 +12,29 @@ interface ItemCardProps {
 export function ItemCard({ item, onClick }: ItemCardProps) {
   return (
     <div
-      className="w-full max-w-lg h-auto 3xl:h-[180px] bg-white rounded-sm shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
+      className="w-full max-w-lg h-auto 3xl:h-[180px] bg-white dark:bg-gray-900 rounded-sm shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer"
       onClick={() => onClick(item)}
     >
-      <div className="flex">
+      <div className="flex items-stretch">
         {/* Item Info */}
-        <div className="flex-1 p-4">
-          <div className="flex items-start justify-between mb-2">
-            <h3 className="font-semibold text-gray-900 text-md leading-tight">
-              {item.name}
-            </h3>
+        <div className="flex-1 p-4 flex flex-col justify-between">
+          <div>
+            <div className="flex items-start justify-between mb-2">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-md leading-tight">
+                {item.name}
+              </h3>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-xs mb-3 line-clamp-2">
+              {item.description}
+            </p>
           </div>
-
-          <p className="text-gray-600 text-xs mb-3 line-clamp-2">
-            {item.description}
-          </p>
-
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-900">
+          <div className="flex items-center gap-2 mt-auto">
+            <span className="text-sm text-gray-900 dark:text-gray-100">
               £{item.price.toFixed(2)}
               {(item.popular || item.deal) && (
                 <>
                   .{" "}
-                  <span className="text-sm font-normal text-orange-800">
+                  <span className="text-sm font-normal text-orange-800 dark:text-orange-300">
                     {item.popular ? "Popular" : "Deal"}
                   </span>
                 </>
@@ -44,7 +44,7 @@ export function ItemCard({ item, onClick }: ItemCardProps) {
         </div>
 
         {/* Item Image */}
-        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0 my-3 mr-3 sm:my-5 sm:mr-5">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0 my-3 mr-3 sm:my-5 sm:mr-5 flex items-center">
           <Image
             src={item.image}
             alt={item.name}
@@ -55,7 +55,7 @@ export function ItemCard({ item, onClick }: ItemCardProps) {
 
           {/* Button overlayed on bottom-right */}
           <button
-            className="absolute -bottom-3 -right-3 bg-white text-customGray/20 p-3 rounded-full shadow-md transition-colors"
+            className="absolute -bottom-3 -right-3 bg-white dark:bg-gray-900 text-customGray/20 dark:text-gray-400 p-3 rounded-full shadow-md transition-colors"
             onClick={() => onClick(item)}
           >
             <Plus className="h-4 w-4" />

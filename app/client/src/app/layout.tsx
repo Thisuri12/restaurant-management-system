@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} font-sora antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} font-sora antialiased bg-white dark:bg-gray-900`}
       >
         <Header />
         {children}
