@@ -177,8 +177,8 @@ export default function RestaurantMenuPage() {
             {(restaurantData.categories ?? []).map((category) => (
               <MenuSection
                 key={category.id}
-                ref={setCategoryRef(category.id)}
-                category={{ id: category.id, name: category.name }}
+                ref={setCategoryRef(String(category.id))} // <-- always string
+                category={{ id: String(category.id), name: category.name }} // <-- always string
                 items={category.items ?? []}
                 allItems={allItems}
                 isPopularSection={false}

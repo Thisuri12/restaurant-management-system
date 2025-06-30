@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { verifyAccessToken } from "../middleware/auth.middleware";
+
 import {
   createRestaurant,
   findAllRestaurants,
@@ -9,10 +11,11 @@ import {
 
 const router = Router();
 
-router.post("/", createRestaurant);
+router.post("/", verifyAccessToken, createRestaurant);
+router.put("/:id", verifyAccessToken, updateRestaurant);
+router.delete("/:id", verifyAccessToken, deleteRestaurant);
+
 router.get("/", findAllRestaurants);
 router.get("/:id", findRestaurantById);
-router.put("/:id", updateRestaurant);
-router.delete("/:id", deleteRestaurant);
 
 export default router;

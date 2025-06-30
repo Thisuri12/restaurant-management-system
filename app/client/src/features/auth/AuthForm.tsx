@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/api";
 import { useAuthStore } from "@/stores/auth";
 
@@ -25,6 +25,8 @@ export default function AuthForm({ type }: Props) {
     formState: { errors },
   } = useForm<AuthFormValues>();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
   const login = useAuthStore((s) => s.login);
 
   const [apiError, setApiError] = useState<string>("");
@@ -40,7 +42,12 @@ export default function AuthForm({ type }: Props) {
 
       if (type === "login") {
         login(res.data);
-        router.push("/protected");
+        console.log("Redirect to:", redirect);
+        if (redirect && redirect.startsWith("/")) {
+          router.push(redirect);
+        } else {
+          router.push("/protected");
+        }
       } else {
         router.push("/email/login");
       }
