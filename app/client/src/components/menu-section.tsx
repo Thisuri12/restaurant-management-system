@@ -10,9 +10,9 @@ interface MenuSectionProps {
   category: MenuSectionCategory;
   items: MenuItem[];
   onItemClick: (item: MenuItem) => void;
-  // Add this prop to pass all items from all categories
+  // Prop to pass all items from all categories
   allItems?: MenuItem[];
-  // Add this prop to identify if this is the popular section
+  // Prop to identify if this is the popular section
   isPopularSection?: boolean;
 }
 
@@ -79,7 +79,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
     return (
       <section
         ref={ref}
-        id={`category-${category.id}`}
+        id={`category-${String(category.id)}`} // <-- always string
         className="scroll-mt-[140px] mb-4 w-full"
       >
         <div className="max-w-7xl mx-auto">

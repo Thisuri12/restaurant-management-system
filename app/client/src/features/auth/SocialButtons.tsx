@@ -5,7 +5,13 @@ import Image from "next/image";
 
 export default function SocialButtons() {
   const handleSocial = (provider: "google" | "facebook") => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}`;
+    const searchParams = new URLSearchParams(window.location.search);
+    const redirect = searchParams.get("redirect");
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}`;
+    if (redirect) {
+      url += `?redirect=${encodeURIComponent(redirect)}`;
+    }
+    window.location.href = url;
   };
 
   return (

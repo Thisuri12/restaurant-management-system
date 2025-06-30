@@ -13,11 +13,17 @@ export default function SocialCallback() {
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
     const userStr = searchParams.get("user");
+    const redirect = searchParams.get("redirect") || "/";
 
     if (accessToken && refreshToken && userStr) {
-      const user = JSON.parse(userStr);
-      login({ user, accessToken, refreshToken });
-      router.replace("/protected");
+      try {
+        const user = JSON.parse(decodeURIComponent(userStr));
+        login({ user, accessToken, refreshToken });
+        router.replace(redirect);
+      } catch (err) {
+        console.error("Invalid user data:", err);
+        router.replace("/login");
+      }
     } else {
       router.replace("/login");
     }

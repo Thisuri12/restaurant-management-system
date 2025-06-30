@@ -87,15 +87,7 @@ export const login = async (
       where: { email, provider: "local" },
     });
 
-    if (!user) {
-      res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "Invalid credentials." });
-      return;
-    }
-
-    const valid = await bcrypt.compare(password, user.password_hash);
-    if (!valid) {
+    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
       res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ message: "Invalid credentials." });
@@ -105,18 +97,20 @@ export const login = async (
     const accessToken = generateAccessToken(user.id, user.role);
     const refreshToken = generateRefreshToken(user.id);
 
-    const response: AuthResponse = {
-      accessToken,
-      refreshToken,
+    // ✅ Set tokens in response headers only
+    res.setHeader("X-Access-Token", accessToken);
+    res.setHeader("X-Refresh-Token", refreshToken);
+
+    // ✅ Return only user data in body (no tokens)
+    res.status(StatusCodes.OK).json({
       user: {
         id: user.id,
         full_name: user.full_name,
         email: user.email,
         role: user.role,
       },
-    };
-
-    res.status(StatusCodes.OK).json(response);
+      message: "Login successful",
+    });
   } catch (err) {
     next(err);
   }
@@ -137,16 +131,16 @@ export const refreshToken = async (
       return;
     }
 
-    const refreshToken = authHeader.split(" ")[1];
+    const oldToken = authHeader.split(" ")[1];
 
-    if (tokenBlacklist.has(refreshToken)) {
+    if (tokenBlacklist.has(oldToken)) {
       res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ message: "Invalid refresh token" });
       return;
     }
 
-    const decoded = verifyToken(refreshToken);
+    const decoded = verifyToken(oldToken);
     const user = await User.findByPk(decoded.userId);
 
     if (!user) {
@@ -157,21 +151,22 @@ export const refreshToken = async (
     const newAccessToken = generateAccessToken(user.id, user.role);
     const newRefreshToken = generateRefreshToken(user.id);
 
-    // Add old refresh token to blacklist
-    tokenBlacklist.add(refreshToken);
+    tokenBlacklist.add(oldToken);
 
-    const response: AuthResponse = {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
+    // Set tokens in response headers only
+    res.setHeader("X-Access-Token", newAccessToken);
+    res.setHeader("X-Refresh-Token", newRefreshToken);
+
+    // Return only user data in body
+    res.status(StatusCodes.OK).json({
       user: {
         id: user.id,
         full_name: user.full_name,
         email: user.email,
         role: user.role,
       },
-    };
-
-    res.status(StatusCodes.OK).json(response);
+      message: "Token refreshed successfully",
+    });
   } catch (err) {
     next(err);
   }
