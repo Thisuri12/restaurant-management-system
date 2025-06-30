@@ -10,6 +10,8 @@ interface ItemCardProps {
 }
 
 export function ItemCard({ item, onClick }: ItemCardProps) {
+  const imageSrc = item.image_url?.trim() || null;
+
   return (
     <div
       className="w-full max-w-lg h-auto 3xl:h-[180px] bg-white dark:bg-gray-900 rounded-sm shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer"
@@ -45,13 +47,19 @@ export function ItemCard({ item, onClick }: ItemCardProps) {
 
         {/* Item Image */}
         <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0 my-3 mr-3 sm:my-5 sm:mr-5 flex items-center">
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            className="object-cover rounded-sm"
-            sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 112px, 128px"
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={item.name}
+              fill
+              className="object-cover rounded-sm"
+              sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 112px, 128px"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-sm flex items-center justify-center text-gray-400 text-xs">
+              No Image
+            </div>
+          )}
 
           {/* Button overlayed on bottom-right */}
           <button

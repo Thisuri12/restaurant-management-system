@@ -19,6 +19,8 @@ export class Dish extends Model<
   declare category_id: number;
   declare created_at?: Date;
   declare updated_at?: Date;
+  declare popular?: boolean;
+  declare deal?: boolean;
 }
 
 Dish.init(
@@ -35,6 +37,8 @@ Dish.init(
     category_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
     created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+    popular: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    deal: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   },
   {
     sequelize,

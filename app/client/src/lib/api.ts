@@ -6,7 +6,8 @@ const api = axios.create({
 
 export const fetchRestaurantById = async (id: string) => {
   const res = await api.get(`/restaurants/${id}`);
-  return res.data;
+  // If backend returns { data: restaurant }
+  return res.data.data;
 };
 
 export default api;

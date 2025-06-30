@@ -15,10 +15,11 @@ import type { MenuItem, MenuSectionCategory, Restaurant } from "@/lib/types";
 export default function RestaurantMenuPage() {
   const { id } = useParams();
   const [restaurantData, setRestaurantData] = useState<Restaurant | null>(null);
+  const [hasScrolledToTop, setHasScrolledToTop] = useState(false);
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
   const { selectedItem, setSelectedItem, setActiveCategory } = useMenuStore();
 
-  // Fetch restaurant data when ID is available
   useEffect(() => {
     if (!id) return;
     fetchRestaurantById(id as string)
@@ -26,7 +27,20 @@ export default function RestaurantMenuPage() {
       .catch((err) => console.error("Failed to fetch restaurant:", err));
   }, [id]);
 
-  // Use data from API instead of mock
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    if (restaurantData && !hasScrolledToTop) {
+      window.scrollTo(0, 0); // Force scroll to top
+      setHasScrolledToTop(true);
+      setTimeout(() => setLoadingComplete(true), 100); // Delay to allow scroll
+    }
+  }, [restaurantData, hasScrolledToTop]);
+
   const allItems = useMemo(() => {
     if (!restaurantData?.categories) return [];
     return restaurantData.categories
@@ -49,38 +63,63 @@ export default function RestaurantMenuPage() {
       }
     : null;
 
+  const dealItems = useMemo(
+    () => allItems.filter((item): item is MenuItem => !!item && !!item.deal),
+    [allItems]
+  );
+  const hasDealItems = dealItems.length > 0;
+
+  const dealsCategory: MenuSectionCategory | null = hasDealItems
+    ? {
+        id: "deals-section",
+        name: "Meal Deals",
+        description: "Special offers and discounts",
+      }
+    : null;
+
+  const initialActiveCategory = useMemo(() => {
+    if (hasDealItems) return "deals-section";
+    if (hasPopularItems) return "popular-section";
+    if (restaurantData?.categories?.[0]?.id)
+      return String(restaurantData.categories[0].id);
+    return "";
+  }, [hasDealItems, hasPopularItems, restaurantData]);
+
+  // Only include "Meal Deals" and real categories in the nav
+  const navCategories = useMemo(() => {
+    if (!restaurantData?.categories) return [];
+    const base = restaurantData.categories.map((cat) => ({
+      id: String(cat.id), // convert to string
+      name: cat.name,
+      count: cat.items?.length ?? 0,
+    }));
+    const arr = [];
+    if (hasDealItems)
+      arr.push({
+        id: "deals-section",
+        name: "Meal Deals",
+        count: dealItems.length,
+      });
+    return [...arr, ...base];
+  }, [restaurantData, hasDealItems, dealItems.length]);
+
+  // Only include "Meal Deals" and real categories in scroll spy
   const categoryIds = useMemo(() => {
     if (!restaurantData?.categories) return [];
-    const ids = restaurantData.categories.map((cat) => cat.id);
-    return hasPopularItems ? ["popular-section", ...ids] : ids;
-  }, [restaurantData, hasPopularItems]);
+    const ids = restaurantData.categories.map((cat) => String(cat.id)); // convert here as well
+    const arr = [];
+    if (hasDealItems) arr.push("deals-section");
+    return [...arr, ...ids];
+  }, [restaurantData, hasDealItems]);
 
-  const { activeCategory, scrollToCategory, setCategoryRef } =
-    useScrollSpy(categoryIds);
+  const { activeCategory, scrollToCategory, setCategoryRef } = useScrollSpy(
+    categoryIds,
+    initialActiveCategory
+  );
 
   useEffect(() => {
     setActiveCategory(activeCategory);
   }, [activeCategory, setActiveCategory]);
-
-  // Use categories from API instead of menuData
-  const navCategories = useMemo(() => {
-    if (!restaurantData?.categories) return [];
-    const base = restaurantData.categories.map((cat) => ({
-      id: cat.id,
-      name: cat.name,
-      count: cat.items?.length ?? 0,
-    }));
-    return hasPopularItems
-      ? [
-          {
-            id: "popular-section",
-            name: "Popular",
-            count: popularItems.length,
-          },
-          ...base,
-        ]
-      : base;
-  }, [restaurantData, popularItems.length, hasPopularItems]);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);
@@ -90,8 +129,8 @@ export default function RestaurantMenuPage() {
     setSelectedItem(null);
   };
 
-  // Loading fallback
-  if (!restaurantData) {
+  //Show loader until scroll-to-top and data load is done
+  if (!restaurantData || !loadingComplete) {
     return <p className="p-4 text-center">Loading restaurant...</p>;
   }
 
@@ -111,7 +150,6 @@ export default function RestaurantMenuPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
           {/* Menu */}
           <div className="space-y-8 min-w-0">
-            {/* Conditional render for popular section */}
             {hasPopularItems && popularCategory && (
               <MenuSection
                 key="popular-section"
@@ -124,7 +162,18 @@ export default function RestaurantMenuPage() {
               />
             )}
 
-            {/* Render dynamic categories and items */}
+            {hasDealItems && dealsCategory && (
+              <MenuSection
+                key="deals-section"
+                ref={setCategoryRef("deals-section")}
+                category={dealsCategory}
+                items={dealItems}
+                allItems={allItems}
+                isPopularSection={false}
+                onItemClick={handleItemClick}
+              />
+            )}
+
             {(restaurantData.categories ?? []).map((category) => (
               <MenuSection
                 key={category.id}
@@ -145,7 +194,6 @@ export default function RestaurantMenuPage() {
         </div>
       </div>
 
-      {/* Item Modal */}
       {selectedItem && (
         <ItemModal item={selectedItem} isOpen onClose={handleCloseModal} />
       )}

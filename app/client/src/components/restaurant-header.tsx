@@ -20,6 +20,9 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
+  // Use image if available, otherwise null
+  const imageSrc = restaurant.image_url?.trim() ? restaurant.image_url : null;
+
   return (
     <div className="w-full bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto items-start text-left px-0 sm:px-2 md:px-10">
@@ -36,9 +39,9 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
         <div className="flex flex-col md:flex-row items-start gap-2 px-0 py-0 sm:px-2 sm:py-2 md:px-6">
           {/* Image with Start group order button and back button overlayed on mobile */}
           <div className="relative w-full md:w-1/3 h-56 sm:h-72 md:h-auto aspect-auto md:aspect-[16/9] rounded overflow-hidden flex-shrink-0 bg-black">
-            {restaurant.image ? (
+            {imageSrc ? (
               <Image
-                src={restaurant.image}
+                src={imageSrc}
                 alt={restaurant.name}
                 fill
                 sizes="100vw"
@@ -46,7 +49,6 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
                 priority
               />
             ) : (
-              // Optionally, render a fallback image or a placeholder div
               <div className="w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-400">
                 No image
               </div>
@@ -112,7 +114,7 @@ export function RestaurantHeader({ restaurant }: RestaurantHeaderProps) {
             {/* Delivery info badges */}
             <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 text-xs sm:text-sm">
               <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
-                Delivery: {restaurant.deliveryFee}
+                Delivery: {restaurant.delivery_fee}
               </span>
               <span className="px-3 py-1 text-center whitespace-nowrap bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded">
                 Min order: £

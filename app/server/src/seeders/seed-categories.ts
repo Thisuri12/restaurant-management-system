@@ -10,7 +10,7 @@ const seedCategories = async () => {
     const restaurants = await Restaurant.findAll();
 
     for (const restaurant of restaurants) {
-      const numberOfCategories = 3;
+      const numberOfCategories = 15;
 
       for (let i = 0; i < numberOfCategories; i++) {
         await Category.create(generateFakeCategory(restaurant.id));

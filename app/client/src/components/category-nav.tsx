@@ -21,10 +21,7 @@ export function CategoryNav({
   activeCategory,
   onCategoryClick,
 }: CategoryNavProps) {
-  const navCategories = categories.filter(
-    (category) =>
-      category.name.toLowerCase() !== "popular" && category.id !== "popular"
-  );
+  const navCategories = categories;
   const navRef = useRef<HTMLDivElement>(null);
 
   const [visibleCount, setVisibleCount] = useState(navCategories.length);
@@ -116,7 +113,7 @@ export function CategoryNav({
 
   // Find the active hidden category (if any)
   const activeHiddenCategory = hiddenCategories.find(
-    (category) => category.id === activeCategory
+    (category) => String(category.id) === String(activeCategory)
   );
   const isActiveHidden = Boolean(activeHiddenCategory); // ➕ NEW: check if "More" button should be highlighted
 
@@ -140,10 +137,10 @@ export function CategoryNav({
               }}
               onClick={() => handleScrollToCategory(category.id)}
               className={cn(
-                "flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap",
+                "flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap h-6",
                 activeCategory === category.id
-                  ? "bg-customGreen text-white shadow-sm font-bold h-6"
-                  : "text-customGreen dark:text-gray-100 h-6"
+                  ? "bg-customGreen text-white shadow-sm font-bold"
+                  : "text-customGreen dark:text-gray-100"
               )}
             >
               <span>{category.name}</span>

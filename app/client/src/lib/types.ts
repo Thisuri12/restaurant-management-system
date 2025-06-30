@@ -5,8 +5,8 @@ export interface Restaurant {
   open_time: string;
   close_time: string;
   min_price: number;
-  deliveryFee: string;
-  image: string;
+  delivery_fee: string;
+  image_url: string;
   categories: MenuSectionCategory[];
 }
 
@@ -15,7 +15,7 @@ export interface MenuItem {
   name: string;
   description: string;
   price: number;
-  image: string;
+  image_url: string;
   popular?: boolean;
   deal?: boolean;
 }

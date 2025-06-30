@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useScrollSpy(categoryIds: string[]) {
-  const [activeCategory, setActiveCategory] = useState(categoryIds[0]);
+export function useScrollSpy(
+  categoryIds: string[],
+  initialActiveCategory?: string
+) {
+  const [activeCategory, setActiveCategory] = useState(
+    initialActiveCategory || categoryIds[0]
+  );
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
   // Used to assign refs to each section

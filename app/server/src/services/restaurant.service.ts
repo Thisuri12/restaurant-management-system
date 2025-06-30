@@ -1,4 +1,5 @@
 import { Restaurant } from "../models/restaurant.model";
+import { Category } from "../models/category.model";
 import z from "zod";
 import { Op } from "sequelize";
 import {
@@ -57,6 +58,8 @@ export const restaurantService = {
 
   //Finds a restaurant by its primary key
   async findById(id: string | number) {
-    return await Restaurant.findByPk(id, { include: [/* associations here */] });
+    return await Restaurant.findByPk(id, {
+      include: [{ model: Category, as: "categories", include: ["items"] }],
+    });
   },
 };

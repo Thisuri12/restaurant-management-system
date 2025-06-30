@@ -6,12 +6,12 @@ import { User } from "./user.model";
 import { Order } from "./order.model";
 import { OrderItem } from "./orderItem.model";
 
-//Restaurant->Category
-Restaurant.hasMany(Category, { foreignKey: "restaurant_id" });
+//Restaurant->Category with alias "categories"
+Restaurant.hasMany(Category, { foreignKey: "restaurant_id", as: "categories" });
 Category.belongsTo(Restaurant, { foreignKey: "restaurant_id" });
 
-//Category->Dishes
-Category.hasMany(Dish, { foreignKey: "category_id" });
+//Category->Dishes with alias "items"
+Category.hasMany(Dish, { foreignKey: "category_id", as: "items" });
 Dish.belongsTo(Category, { foreignKey: "category_id" });
 
 //Dishes->Rating
