@@ -47,8 +47,8 @@ export function useScrollSpy(
     });
 
     categoryIds.forEach((id) => {
-      const el = sectionRefs.current[id];
-      if (el) observer.observe(el);
+      const section = document.getElementById(`category-${id}`);
+      if (section) observer.observe(section);
     });
 
     return () => observer.disconnect();

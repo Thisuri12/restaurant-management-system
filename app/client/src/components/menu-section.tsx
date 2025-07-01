@@ -79,7 +79,7 @@ export const MenuSection = forwardRef<HTMLElement, MenuSectionProps>(
     return (
       <section
         ref={ref}
-        id={`category-${String(category.id)}`} // <-- always string
+        id={`category-${category.id}`}
         className="scroll-mt-[140px] mb-4 w-full"
       >
         <div className="max-w-7xl mx-auto">

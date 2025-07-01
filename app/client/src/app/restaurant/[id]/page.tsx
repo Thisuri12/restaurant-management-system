@@ -106,7 +106,7 @@ export default function RestaurantMenuPage() {
   // Only include "Meal Deals" and real categories in scroll spy
   const categoryIds = useMemo(() => {
     if (!restaurantData?.categories) return [];
-    const ids = restaurantData.categories.map((cat) => String(cat.id)); // stringify all ids
+    const ids = restaurantData.categories.map((cat) => String(cat.id));
     const arr = [];
     if (hasDealItems) arr.push("deals-section");
     return [...arr, ...ids];
